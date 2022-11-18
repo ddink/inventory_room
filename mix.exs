@@ -18,7 +18,7 @@ defmodule InventoryRoom.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger],
+      extra_applications: [:logger, :shopping_cart],
       mod: {InventoryRoom.Application, []}
     ]
   end
@@ -30,7 +30,8 @@ defmodule InventoryRoom.MixProject do
       {:ecto_sql, "~> 3.9"},
       {:ex_machina, "~> 2.7"},
       {:postgrex, "~> 0.16.5"},
-      {:faker, "~> 0.17.0", only: [:test, :dev]}
+      {:faker, "~> 0.17.0", only: [:test, :dev]},
+      {:shopping_cart, in_umbrella: true}
     ]
   end
 end
