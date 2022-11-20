@@ -1,7 +1,7 @@
 defmodule InventoryRoom.OrdersTest do
 	use InventoryRoom.DataCase, async: true
 	alias ShoppingCart.Schemas.Cart
-	alias ShoppingCart.Repo
+	alias StoreRepo.Repo
 	import ShoppingCart.Query
 	import InventoryRoom.Orders
 	alias ShoppingCart.Factory
@@ -11,20 +11,21 @@ defmodule InventoryRoom.OrdersTest do
 			user = Factory.insert(:user)
       cart1 = Factory.insert(:cart)
       cart2 = Factory.insert(:cart)
-      
-      changeset1 = Cart.changeset(cart1, %{user_id: user.id})
-      Repo.update(changeset1)
-      
-      changeset2 = Cart.changeset(cart2, %{user_id: user.id})
-      Repo.update(changeset2)
+      cart3 = Factory.insert(:cart)
+
+      update_cart_user_id(cart1, user)
+      update_cart_user_id(cart2, user)
+      update_cart_user_id(cart3, user)
 
       cart1 = Repo.get(cart_with_order(), cart1.id)
       cart2 = Repo.get(cart_with_order(), cart2.id)
+      cart3 = Repo.get(cart_with_order(), cart3.id)
 
       assert cart1.user_id == user.id
       assert cart2.user_id == user.id
+      assert cart3.user_id == user.id
 
-      assert get_orders_by_user(user) == [cart1.order, cart2.order]
+      assert Enum.sort(get_orders_by_user(user)) == Enum.sort([cart1.order, cart2.order, cart3.order])
 		end
 
 		test "error: it returns nil when there are no orders associated with a user" do
@@ -33,6 +34,11 @@ defmodule InventoryRoom.OrdersTest do
       assert get_orders_by_user(user) == nil
     end
 	end
+
+  defp update_cart_user_id(cart, user) do
+    changeset = Cart.changeset(cart, %{user_id: user.id})
+    Repo.update(changeset)
+  end
 
 	describe "get_orders_by_date/1" do
 		test "success: it returns all orders with matching inserted_at value when given a naive datetime" do
