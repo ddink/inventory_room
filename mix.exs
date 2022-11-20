@@ -5,6 +5,10 @@ defmodule InventoryRoom.MixProject do
     [
       app: :inventory_room,
       version: "0.1.0",
+      build_path: "../../_build",
+      config_path: "../../config/config.exs",
+      deps_path: "../../deps",
+      lockfile: "../../mix.lock",
       elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -18,8 +22,8 @@ defmodule InventoryRoom.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger, :shopping_cart],
-      mod: {InventoryRoom.Application, []}
+      extra_applications: [:logger, :shopping_cart, :store_repo],
+      # mod: {InventoryRoom.Application, []}
     ]
   end
 
@@ -31,7 +35,8 @@ defmodule InventoryRoom.MixProject do
       {:ex_machina, "~> 2.7"},
       {:postgrex, "~> 0.16.5"},
       {:faker, "~> 0.17.0", only: [:test, :dev]},
-      {:shopping_cart, in_umbrella: true}
+      {:shopping_cart, in_umbrella: true},
+      {:store_repo, in_umbrella: true}
     ]
   end
 end

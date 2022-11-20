@@ -1,6 +1,6 @@
 defmodule InventoryRoom.DataCase do
 	use ExUnit.CaseTemplate
-	alias ShoppingCart.Repo
+	alias StoreRepo.Repo
 
 	using do
 		quote do
