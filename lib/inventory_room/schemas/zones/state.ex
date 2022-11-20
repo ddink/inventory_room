@@ -8,12 +8,12 @@
 # end
 
 defmodule InventoryRoom.Settings.Zones.State do
-  # import Ecto.Schema
+  import Ecto.Schema
 
-  # schema "states" do
-    # field :name, :string
-    # field :abbr, :string
-    # has_one :country, Country
-    # timestamps()
-  # end
+  schema "states" do
+    field :name, :string
+    field :abbr, :string
+    belongs_to :country, Country
+    timestamps()
+  end
 end

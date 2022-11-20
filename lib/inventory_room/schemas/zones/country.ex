@@ -11,15 +11,15 @@
 # end
 
 defmodule InventoryRoom.Settings.Zones.Country do
-  # import Ecto.Schema
+  import Ecto.Schema
 
-  # schema "countries" do
-    # field :iso_name, :string
-    # field :iso, :string
-    # field :iso3, :string
-    # field :name, :string
-    # field :numcode, :integer
-    # field :states_required, :boolean -- should default to false
-    # timestamps()
-  # end
+  schema "countries" do
+    field :iso_name, :string
+    field :iso, :string
+    field :iso3, :string
+    field :name, :string
+    field :numcode, :integer
+    field :states_required, :boolean
+    timestamps()
+  end
 end

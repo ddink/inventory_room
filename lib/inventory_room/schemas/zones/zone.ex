@@ -8,15 +8,15 @@
 # end
 
 defmodule InventoryRoom.Settings.Zones.Zone do
-  # import Ecto.Schema
+  import Ecto.Schema
 
-  # schema "zones" do
-    # field :name, :string
-    # field :description, :string -- should be text
-    # field :zone_members_count, :integer -- should default to 0
-    # field :type, :string -- should be validated through inclusion of ["country-based", "state-based"]
-    # has_many :states, State
-    # has_many :countrries, Country
-    # timestamps()
-  # end
+  schema "zones" do
+    field :name, :string
+    field :description, :string
+    field :zone_members_count, :integer
+    field :type, :string # -- should be validated through inclusion of ["country-based", "state-based"]
+    has_many :states, State
+    has_many :countries, Country
+    timestamps()
+  end
 end

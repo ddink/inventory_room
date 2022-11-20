@@ -15,21 +15,22 @@
 # end
 
 defmodule InventoryRoom.Settings.Shipping.ShippingMethod do
-  # import Ecto.Schema
+  import Ecto.Schema
 
-  # schema "shipping_methods" do
-    # field :name, :string
-    # field :display_on, :string
-    # field :deleted_at, :naive_datetime
-    # field :tracking_url, :string
-    # field :internal_name, :string
-    # field :code, :string
-    # field :available_to_all, :boolean -- should default to true
-    # field :carrier, :string
-    # field :service_level, :string
-    # has_one :tax_category, TaxCategory
-    # has_many :shipping_category, ShippingCategory
-    # has_many :stock_locations, StockLocation
-    # has_many :zones, Zone
-    # timestamps()
+  schema "shipping_methods" do
+    field :name, :string
+    field :display_on, :string
+    field :deleted_at, :naive_datetime
+    field :tracking_url, :string
+    field :internal_name, :string
+    field :code, :string
+    field :available_to_all, :boolean
+    field :carrier, :string
+    field :service_level, :string
+    has_one :tax_category, TaxCategory
+    has_many :shipping_category, ShippingCategory
+    has_many :stock_locations, StockLocation
+    has_many :zones, Zone
+    timestamps()
+  end
 end

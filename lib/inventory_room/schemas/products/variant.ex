@@ -22,23 +22,23 @@
 # end
 
 defmodule InventoryRoom.Products.Variant do
-  # import Ecto.Schema
+  import Ecto.Schema
 
-  # schema "variants" do
-    # field :sku, :string -- should default to "", required (cannot be nil)
-    # field :weight, :float -- should default to 0.0
-    # field :height, :float
-    # field :width, :float
-    # field :depth, :float
-    # field :deleted_at, :naive_datetime
-    # field :is_master, :boolean -- should default to false
-    # belongs_to :product, Product
-    # field :cost_price, :float
-    # field :position, :integer
-    # field :cost_currency, :string
-    # field :track_inventory, :boolean -- should default to true
-    # has_one :tax_category, TaxCategory
-    # has_many :variant_images, VariantImage
-    # timestamps()
-  # end
+  schema "variants" do
+    field :sku, :string
+    field :weight, :decimal
+    field :height, :decimal
+    field :width, :decimal
+    field :depth, :decimal
+    field :deleted_at, :naive_datetime
+    field :is_master, :boolean
+    belongs_to :product, Product
+    field :cost_price, :decimal
+    field :position, :integer
+    field :cost_currency, :string
+    field :track_inventory, :boolean
+    has_one :tax_category, TaxCategory
+    has_many :variant_images, VariantImage
+    timestamps()
+  end
 end

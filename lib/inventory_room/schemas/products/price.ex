@@ -12,16 +12,16 @@
 # end
 
 defmodule InventoryRoom.Products.Price do
-  # import Ecto.Schema
+  import Ecto.Schema
 
-  # schema "prices" do
-    # belongs_to :variant, Variant -- required, cannot be nil
-    # field :amount, :float
-    # field :currency, :string
-    # field :deleted_at, :naive_datetime
-    # field :is_default, :boolean -- should default to true, required (cannot be nil)
-    # field :country_iso, :string
-    # has_many :images, Image
-    # timestamps()
-  # end
+  schema "prices" do
+    belongs_to :variant, Variant
+    field :amount, :decimal
+    field :currency, :string
+    field :deleted_at, :naive_datetime
+    field :is_default, :boolean
+    field :country_iso, :string
+    has_many :images, Image
+    timestamps()
+  end
 end
