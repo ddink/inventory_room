@@ -15,7 +15,11 @@
 # end
 
 defmodule InventoryRoom.Settings.Shipping.ShippingMethod do
-  import Ecto.Schema
+  use Ecto.Schema
+  alias InventoryRoom.Settings.Taxes.TaxCategory
+  alias InventoryRoom.Settings.Shipping.ShippingCategory
+  alias InventoryRoom.Settings.Shipping.StockLocation
+  alias InventoryRoom.Settings.Zones.Zone
 
   schema "shipping_methods" do
     field :name, :string

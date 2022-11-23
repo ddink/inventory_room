@@ -1,5 +1,5 @@
 defmodule InventoryRoom.Promotions.PromotionCategory do
-  import Ecto.Schema
+  use Ecto.Schema
   
   schema "promotion_categories" do
     field(:name, :string)

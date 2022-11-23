@@ -15,14 +15,16 @@
 #   end
 # end
 
-defmodule InventoryRoom.StockItems.StockItem do
-  import Ecto.Schema
+defmodule InventoryRoom.Inventory.StockItem do
+  use Ecto.Schema
+  alias InventoryRoom.Settings.Shipping.StockLocation
+  alias InventoryRoom.Products.Variant
 
   schema "stock_items" do
     belongs_to(:stock_location, StockLocation)
     belongs_to(:variant, Variant)
-    field(:count_on_hand, :integer) -- should default to 0
-    field(:backorderable, :boolean) -- should default to false
+    field(:count_on_hand, :integer)
+    field(:backorderable, :boolean)
     field(:deleted_at, :naive_datetime)
     timestamps()
   end

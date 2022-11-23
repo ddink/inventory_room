@@ -19,13 +19,20 @@
 # end
 
 defmodule InventoryRoom.Products.Product do
-	import Ecto.Schema
+	use Ecto.Schema
+	alias InventoryRoom.Products.{
+		OptionType, 
+		Taxonomy,
+		Variant,
+		ProductImage
+	}
+	alias InventoryRoom.Settings.Shipping.ShippingCategory
 	
 	schema "products" do
 		field(:name, :string)
 		field(:slug, :string)
 		field(:description, :string)
-		has_many(:taxonomies, Taxonomies)
+		has_many(:taxonomies, Taxonomy)
 		has_many(:option_types, OptionType)
 		field(:meta_title, :string)
 		field(:meta_keywords, :string)

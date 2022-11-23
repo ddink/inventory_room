@@ -1,7 +1,7 @@
 defmodule InventoryRoom.Products.OptionType do
-  import Ecto.Schema
+  use Ecto.Schema
 	
-	schema "order_types" do
+	schema "option_types" do
 		field :name, :string
 		field :presentation, :string
 		field :position, :integer

@@ -1,5 +1,7 @@
 defmodule InventoryRoom.Settings.Shipping.StockLocation do
-  import Ecto.Schema
+  use Ecto.Schema
+  alias InventoryRoom.Settings.Zones.{State, Country}
+  # alias InventoryRoom.StockItems.StockItem
 
   schema "stock_locations" do
     field :name, :string
@@ -9,6 +11,7 @@ defmodule InventoryRoom.Settings.Shipping.StockLocation do
     field :city, :string
     has_one :state, State
     has_one :country, Country
+    # has_one :stock_item, StockItem
     field :zipcode, :string
     field :phone, :string
     field :active, :boolean

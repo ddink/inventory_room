@@ -1,5 +1,5 @@
 defmodule InventoryRoom.Settings.Store do
-  import Ecto.Schema
+  use Ecto.Schema
 
   schema "stores" do
     field :name, :string

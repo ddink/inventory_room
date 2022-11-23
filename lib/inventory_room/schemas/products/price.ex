@@ -12,7 +12,9 @@
 # end
 
 defmodule InventoryRoom.Products.Price do
-  import Ecto.Schema
+  use Ecto.Schema
+  alias InventoryRoom.Products.Variant
+  # alias InventoryRoom.Products.Product
 
   schema "prices" do
     belongs_to :variant, Variant
@@ -21,7 +23,7 @@ defmodule InventoryRoom.Products.Price do
     field :deleted_at, :naive_datetime
     field :is_default, :boolean
     field :country_iso, :string
-    has_many :images, Image
+    # has_many :images, Image
     timestamps()
   end
 end

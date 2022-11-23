@@ -1,5 +1,6 @@
 defmodule InventoryRoom.Products.ProductImage do
-  import Ecto.Schema
+  use Ecto.Schema
+  alias InventoryRoom.Products.Product
 
   schema "product_images" do
     field :file, Uploadex.Upload

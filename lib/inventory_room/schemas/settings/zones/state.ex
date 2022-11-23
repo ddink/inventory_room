@@ -8,7 +8,8 @@
 # end
 
 defmodule InventoryRoom.Settings.Zones.State do
-  import Ecto.Schema
+  use Ecto.Schema
+  alias InventoryRoom.Settings.Zones.Country
 
   schema "states" do
     field :name, :string

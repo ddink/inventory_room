@@ -1,5 +1,6 @@
 defmodule InventoryRoom.Products.Taxon do
-	import Ecto.Schema
+	use Ecto.Schema
+	alias InventoryRoom.Products.Taxonomy
 	
 	schema "taxons" do
 		field(:parent_id, :integer)

@@ -1,5 +1,6 @@
 defmodule InventoryRoom.Promotions.Promotion do
-  import Ecto.Schema
+  use Ecto.Schema
+  alias InventoryRoom.Promotions.PromotionCategory
   
   schema "promotions" do
     field(:description, :string)

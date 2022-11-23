@@ -1,5 +1,5 @@
 defmodule InventoryRoom.Settings.RefundsAndReturns.ReimbursementType do
-  import Ecto.Schema
+  use Ecto.Schema
 
   schema "reimbursement_types" do
     field :name, :string

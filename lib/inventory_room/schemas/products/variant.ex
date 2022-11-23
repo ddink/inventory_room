@@ -22,7 +22,10 @@
 # end
 
 defmodule InventoryRoom.Products.Variant do
-  import Ecto.Schema
+  use Ecto.Schema
+  alias InventoryRoom.Products.{Product, VariantImage}
+  alias InventoryRoom.Settings.Taxes.TaxCategory
+  # alias InventoryRoom.StockItems.StockItem
 
   schema "variants" do
     field :sku, :string
@@ -39,6 +42,7 @@ defmodule InventoryRoom.Products.Variant do
     field :track_inventory, :boolean
     has_one :tax_category, TaxCategory
     has_many :variant_images, VariantImage
+    # has_one :stock_item, StockItem
     timestamps()
   end
 end

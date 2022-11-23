@@ -11,7 +11,7 @@
 # end
 
 defmodule InventoryRoom.Settings.Zones.Country do
-  import Ecto.Schema
+  use Ecto.Schema
 
   schema "countries" do
     field :iso_name, :string

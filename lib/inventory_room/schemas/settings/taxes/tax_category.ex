@@ -1,5 +1,5 @@
 defmodule InventoryRoom.Settings.Taxes.TaxCategory do
-  import Ecto.Schema
+  use Ecto.Schema
 
   schema "tax_categories" do
     field :name, :string

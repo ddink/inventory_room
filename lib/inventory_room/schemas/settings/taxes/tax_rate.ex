@@ -14,7 +14,9 @@
 # end
 
 defmodule InventoryRoom.Settings.Taxes.TaxRate do
-  import Ecto.Schema
+  use Ecto.Schema
+  alias InventoryRoom.Settings.Zones.Zone
+  alias InventoryRoom.Settings.Taxes.TaxCategory
   
   schema "tax_rates" do
     field :amount, :decimal

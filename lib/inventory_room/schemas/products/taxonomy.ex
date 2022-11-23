@@ -1,5 +1,5 @@
 defmodule InventoryRoom.Products.Taxonomy do
-	import Ecto.Schema
+	use Ecto.Schema
 	
 	schema "taxonomies" do
 		field(:name, :string)

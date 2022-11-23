@@ -1,5 +1,5 @@
 defmodule InventoryRoom.Settings.RefundsAndReturns.AdjustmentReason do
-  import Ecto.Schema
+  use Ecto.Schema
   
   schema "adjustment_reasons" do
     field :name, :string

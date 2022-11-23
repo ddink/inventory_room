@@ -1,5 +1,5 @@
 defmodule InventoryRoom.Settings.PaymentMethod do
-  import Ecto.Schema
+  use Ecto.Schema
 
   schema "payment_methods" do
     field :type, :string
