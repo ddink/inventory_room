@@ -5,7 +5,7 @@ defmodule InventoryRoom.DataCase do
 	using do
 		quote do
 			import InventoryRoom.DataCase
-			alias ShoppingCart.Factory
+			alias InventoryRoom.Factory
 		end
 	end
 
