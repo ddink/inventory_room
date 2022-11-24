@@ -23,6 +23,7 @@
 
 defmodule InventoryRoom.Products.Variant do
   use Ecto.Schema
+  alias InventoryRoom.Joins.VariantOptionValue
   alias InventoryRoom.Products.{Product, VariantImage}
   alias InventoryRoom.Settings.Taxes.TaxCategory
   # alias InventoryRoom.StockItems.StockItem
@@ -40,9 +41,11 @@ defmodule InventoryRoom.Products.Variant do
     field :position, :integer
     field :cost_currency, :string
     field :track_inventory, :boolean
-    has_one :tax_category, TaxCategory
+    belongs_to :tax_category, TaxCategory
     has_many :variant_images, VariantImage
     # has_one :stock_item, StockItem
+    has_many :variant_option_values, VariantOptionValue
+    has_many :option_values, through: [:variant_option_values, :option_value]
     timestamps()
   end
 end

@@ -16,10 +16,12 @@
 
 defmodule InventoryRoom.Settings.Shipping.ShippingMethod do
   use Ecto.Schema
+  alias InventoryRoom.Joins.{
+    ShippingMethodCategory,
+    ShippingMethodStockLocation,
+    ShippingMethodZone
+  }
   alias InventoryRoom.Settings.Taxes.TaxCategory
-  alias InventoryRoom.Settings.Shipping.ShippingCategory
-  alias InventoryRoom.Settings.Shipping.StockLocation
-  alias InventoryRoom.Settings.Zones.Zone
 
   schema "shipping_methods" do
     field :name, :string
@@ -31,10 +33,13 @@ defmodule InventoryRoom.Settings.Shipping.ShippingMethod do
     field :available_to_all, :boolean
     field :carrier, :string
     field :service_level, :string
-    has_one :tax_category, TaxCategory
-    has_many :shipping_category, ShippingCategory
-    has_many :stock_locations, StockLocation
-    has_many :zones, Zone
+    belongs_to :tax_category, TaxCategory
+    has_many :shipping_method_categories, ShippingMethodCategory
+    has_many :shipping_category, through: [:shipping_method_categories, :shipping_category]
+    has_many :shipping_method_stock_locations, ShippingMethodStockLocation
+    has_many :stock_locations, through: [:shipping_method_stock_locations, :stock_location]
+    has_many :shipping_method_zones, ShippingMethodZone
+    has_many :zones, through: [:shipping_method_zones, :zone]
     timestamps()
   end
 end

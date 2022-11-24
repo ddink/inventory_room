@@ -1,5 +1,6 @@
 defmodule InventoryRoom.Settings.Store do
   use Ecto.Schema
+  alias InventoryRoom.Joins.StorePaymentMethod
 
   schema "stores" do
     field :name, :string
@@ -12,6 +13,8 @@ defmodule InventoryRoom.Settings.Store do
     field :currency, :string
     field :default, :boolean
     field :cart_tax_country_iso, :string
+    has_many :store_payment_methods, StorePaymentMethod
+    has_many :payment_methods, through: [:store_payment_methods, :payment_method]
     timestamps()  
   end
 end

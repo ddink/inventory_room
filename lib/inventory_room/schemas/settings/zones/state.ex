@@ -9,12 +9,15 @@
 
 defmodule InventoryRoom.Settings.Zones.State do
   use Ecto.Schema
+  alias InventoryRoom.Joins.ZoneMember
   alias InventoryRoom.Settings.Zones.Country
 
   schema "states" do
     field :name, :string
     field :abbr, :string
     belongs_to :country, Country
+    has_many :zone_members, ZoneMember
+    has_many :zones, through: [:zone_members, :zone]
     timestamps()
   end
 end

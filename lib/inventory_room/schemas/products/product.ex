@@ -20,20 +20,25 @@
 
 defmodule InventoryRoom.Products.Product do
 	use Ecto.Schema
+	alias InventoryRoom.Joins.{
+		ProductOptionType,
+		ProductTaxon
+	}
 	alias InventoryRoom.Products.{
-		OptionType, 
-		Taxonomy,
 		Variant,
 		ProductImage
 	}
 	alias InventoryRoom.Settings.Shipping.ShippingCategory
+	alias InventoryRoom.Settings.Taxes.TaxCategory
 	
 	schema "products" do
 		field(:name, :string)
 		field(:slug, :string)
 		field(:description, :string)
-		has_many(:taxonomies, Taxonomy)
-		has_many(:option_types, OptionType)
+		has_many(:product_taxons, ProductTaxon)
+		has_many(:taxons, through: [:product_taxons, :taxon])
+		has_many(:product_option_types, ProductOptionType)
+		has_many(:option_types, through: [:product_option_types, :option_type])
 		field(:meta_title, :string)
 		field(:meta_keywords, :string)
 		field(:meta_description, :string)
@@ -42,8 +47,8 @@ defmodule InventoryRoom.Products.Product do
 		field(:promotionable, :boolean)
 		field(:master_sku, :string)
 		has_many(:variants, Variant)
-		has_one(:shipping_category, ShippingCategory)
-		has_one(:tax_category, TaxCategory)
+		belongs_to(:shipping_category, ShippingCategory)
+		belongs_to(:tax_category, TaxCategory)
 		has_many(:product_images, ProductImage)
 		# embeds_many(:prices, Price)
 		# embeds_many(:properties, Property) -- not the same thing as a PropertyType

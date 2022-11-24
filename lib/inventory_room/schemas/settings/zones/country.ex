@@ -20,6 +20,8 @@ defmodule InventoryRoom.Settings.Zones.Country do
     field :name, :string
     field :numcode, :integer
     field :states_required, :boolean
+    has_many :zone_members, ZoneMember
+    has_many :zones, through: [:zone_members, :zone]
     timestamps()
   end
 end

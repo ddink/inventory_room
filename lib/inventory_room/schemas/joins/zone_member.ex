@@ -10,5 +10,6 @@ defmodule InventoryRoom.Joins.ZoneMember do
     belongs_to :country, Country
     belongs_to :state, State
     belongs_to :zone, Zone
+    timestamps()
   end
 end
