@@ -7,7 +7,8 @@ defmodule InventoryRoom.DataCase do
 		OptionType,
     OptionValue,
     Price,
-    Property
+    Property,
+    Taxonomy
 	}
 
 	using do
@@ -61,39 +62,47 @@ defmodule InventoryRoom.DataCase do
   def price_fields, do: Price.fields()
   def price_required_fields, do: Price.required_fields()
   def property_fields, do: Property.fields()
+  def taxonomy_fields, do: Taxonomy.fields()
 
 	def bad_option_type_params do
 		%{
-			name: %{},
-			presentation: 0,
-			position: "not_an_integer"
+			"name" => %{},
+			"presentation" => 0,
+			"position" => "not_an_integer"
 		}
 	end
 
   def bad_option_value_params do
     %{
-      position: %{},
-      name: 0,
-      presentation: %{},
-      option_type_id: "not_an_integer"
+      "position" => %{},
+      "name" => 0,
+      "presentation" => %{},
+      "option_type_id" => "not_an_integer"
     }
   end
 
   def bad_price_params do
     %{
-      amount: "not_a_decimal",
-      currency: 0,
-      deleted_at: %{},
-      is_default: "n/a",
-      country_iso: 0,
-      variant_id: %{}
+      "amount" => "not_a_decimal",
+      "currency" => 0,
+      "deleted_at" => %{},
+      "is_default" => "n/a",
+      "country_iso" => 0,
+      "variant_id" => %{}
     }
   end
 
   def bad_property_params do
     %{
-      name: %{},
-      presentation: 0
+      "name" => %{},
+      "presentation" => 0
+    }
+  end
+
+  def bad_taxonomy_params do
+    %{
+      "name" => 0,
+      "position" => "not_an_integer"
     }
   end
 

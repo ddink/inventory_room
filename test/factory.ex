@@ -5,7 +5,8 @@ defmodule InventoryRoom.Factory do
     OptionType,
     OptionValue,
     Price,
-    Property
+    Property,
+    Taxonomy
   }
 
   def option_type_factory do
@@ -69,6 +70,15 @@ defmodule InventoryRoom.Factory do
     %Property{
       name: name,
       presentation: presentation
+    }
+  end
+
+  def taxonomy_factory do
+    name = ["Shirts", "Pants", "Jackets", "Socks"] |> Enum.random()
+    
+    %Taxonomy{
+      name: name,
+      position: Enum.random(1..10)
     }
   end
 end
