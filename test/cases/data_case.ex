@@ -11,6 +11,10 @@ defmodule InventoryRoom.DataCase do
     Taxonomy
 	}
 
+  alias InventoryRoom.Promotions.{
+    PromotionCategory
+  }
+
 	using do
 		quote do
 			import InventoryRoom.DataCase
@@ -63,6 +67,8 @@ defmodule InventoryRoom.DataCase do
   def price_required_fields, do: Price.required_fields()
   def property_fields, do: Property.fields()
   def taxonomy_fields, do: Taxonomy.fields()
+  
+  def promotion_category_fields, do: PromotionCategory.fields()
 
 	def bad_option_type_params do
 		%{
@@ -103,6 +109,13 @@ defmodule InventoryRoom.DataCase do
     %{
       "name" => 0,
       "position" => "not_an_integer"
+    }
+  end
+
+  def bad_promotion_category_params do
+    %{
+      "name" => 0,
+      "code" => %{}
     }
   end
 

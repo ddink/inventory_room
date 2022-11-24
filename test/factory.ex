@@ -9,6 +9,10 @@ defmodule InventoryRoom.Factory do
     Taxonomy
   }
 
+  alias InventoryRoom.Promotions.{
+    PromotionCategory
+  }
+
   def option_type_factory do
     option = ["size", "color", "style"] |> Enum.random()
     
@@ -79,6 +83,16 @@ defmodule InventoryRoom.Factory do
     %Taxonomy{
       name: name,
       position: Enum.random(1..10)
+    }
+  end
+
+  def promotion_category_factory do
+    name = ["Weekly Sale", "Quarterly Sale", "Regular Discount", "Black Friday Sale"] |> Enum.random()
+    numbers = :rand.uniform(3) |> to_string
+    
+    %PromotionCategory{
+      name: name,
+      code: "SALE" <> numbers
     }
   end
 end
