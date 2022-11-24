@@ -5,7 +5,8 @@ defmodule InventoryRoom.DataCase do
 
 	alias InventoryRoom.Products.{
 		OptionType,
-    OptionValue
+    OptionValue,
+    Price
 	}
 
 	using do
@@ -44,7 +45,7 @@ defmodule InventoryRoom.DataCase do
     assert_error_fields(errors, fields, validation_type)
   end
 
-	defp assert_error_fields(errors, fields, validation_type) when is_atom(validation_type) do
+	def assert_error_fields(errors, fields, validation_type) when is_atom(validation_type) do
     for field <- fields do
       assert errors[field], "expected an error for #{field}"
       {_, meta} = errors[field]
@@ -57,6 +58,9 @@ defmodule InventoryRoom.DataCase do
 	def option_type_fields, do: OptionType.fields()
 
   def option_value_fields, do: OptionValue.fields()
+
+  def price_fields, do: Price.fields()
+  def price_required_fields, do: Price.required_fields()
 
 	def bad_option_type_params do
 		%{
@@ -75,7 +79,18 @@ defmodule InventoryRoom.DataCase do
     }
   end
 
-	defp atom_map(string_key_map) do
+  def bad_price_params do
+    %{
+      amount: "not_a_decimal",
+      currency: 0,
+      deleted_at: %{},
+      is_default: "n/a",
+      country_iso: 0,
+      variant_id: %{}
+    }
+  end
+
+	def atom_map(string_key_map) do
     for {key, val} <- string_key_map, into: %{}, do: {String.to_atom(key), val}
   end
 

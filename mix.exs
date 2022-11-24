@@ -35,6 +35,8 @@ defmodule InventoryRoom.MixProject do
       {:ex_machina, "~> 2.7"},
       {:postgrex, "~> 0.16.5"},
       {:faker, "~> 0.17.0", only: [:test, :dev]},
+      {:faker_elixir_octopus, "~> 1.0"},
+      {:countries, "~> 1.6"},
       {:shopping_cart, in_umbrella: true},
       {:store_repo, in_umbrella: true}
     ]

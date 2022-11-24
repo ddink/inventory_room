@@ -13,6 +13,7 @@
 
 defmodule InventoryRoom.Products.Price do
   use Ecto.Schema
+  import Ecto.Changeset
   alias InventoryRoom.Products.Variant
   # alias InventoryRoom.Products.Product
 
@@ -25,5 +26,31 @@ defmodule InventoryRoom.Products.Price do
     field :country_iso, :string
     # has_many :images, Image
     timestamps()
+  end
+
+  def fields do
+    __MODULE__.__schema__(:fields) -- [:id, :inserted_at, :updated_at]
+  end
+
+  def required_fields do
+    [:variant_id, :is_default]
+  end
+
+  def changeset(params), do: changeset(%__MODULE__{}, params)
+  def changeset(%__MODULE__{} = price, params) do
+    price 
+    |> cast(params, fields())
+    |> validate_length(:country_iso, is: 2)
+  end
+
+  def create_changeset(params), do: create_changeset(%__MODULE__{}, params)
+  def create_changeset(%__MODULE__{} = price, params) do
+    price 
+    |> changeset(params)
+    |> validate_required(required_fields())
+  end
+
+  def delete_changeset(%__MODULE__{} = price) do
+    price |> changeset(%{})
   end
 end
