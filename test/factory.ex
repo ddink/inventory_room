@@ -4,7 +4,8 @@ defmodule InventoryRoom.Factory do
   alias InventoryRoom.Products.{
     OptionType,
     OptionValue,
-    Price
+    Price,
+    Property
   }
 
   def option_type_factory do
@@ -58,6 +59,16 @@ defmodule InventoryRoom.Factory do
       country_iso: country_iso,
       # variant_id: variant.id
       variant_id: Enum.random(1..10)
+    }
+  end
+
+  def property_factory do
+    name = ["Manufacturer", "Brand", "Model", "Shirt Type"] |> Enum.random()
+    presentation = ["Nike", "Jordan", "Flight Team", "T-shirt"] |> Enum.random()
+
+    %Property{
+      name: name,
+      presentation: presentation
     }
   end
 end

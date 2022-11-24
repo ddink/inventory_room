@@ -6,7 +6,8 @@ defmodule InventoryRoom.DataCase do
 	alias InventoryRoom.Products.{
 		OptionType,
     OptionValue,
-    Price
+    Price,
+    Property
 	}
 
 	using do
@@ -56,11 +57,10 @@ defmodule InventoryRoom.DataCase do
   end
 
 	def option_type_fields, do: OptionType.fields()
-
   def option_value_fields, do: OptionValue.fields()
-
   def price_fields, do: Price.fields()
   def price_required_fields, do: Price.required_fields()
+  def property_fields, do: Property.fields()
 
 	def bad_option_type_params do
 		%{
@@ -87,6 +87,13 @@ defmodule InventoryRoom.DataCase do
       is_default: "n/a",
       country_iso: 0,
       variant_id: %{}
+    }
+  end
+
+  def bad_property_params do
+    %{
+      name: %{},
+      presentation: 0
     }
   end
 
