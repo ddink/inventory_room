@@ -4,7 +4,8 @@ defmodule InventoryRoom.DataCase do
 	alias Ecto.Changeset
 
 	alias InventoryRoom.Products.{
-		OptionType
+		OptionType,
+    OptionValue
 	}
 
 	using do
@@ -55,6 +56,8 @@ defmodule InventoryRoom.DataCase do
 
 	def option_type_fields, do: OptionType.fields()
 
+  def option_value_fields, do: OptionValue.fields()
+
 	def bad_option_type_params do
 		%{
 			name: %{},
@@ -62,6 +65,15 @@ defmodule InventoryRoom.DataCase do
 			position: "not_an_integer"
 		}
 	end
+
+  def bad_option_value_params do
+    %{
+      position: %{},
+      name: 0,
+      presentation: %{},
+      option_type_id: "not_an_integer"
+    }
+  end
 
 	defp atom_map(string_key_map) do
     for {key, val} <- string_key_map, into: %{}, do: {String.to_atom(key), val}
