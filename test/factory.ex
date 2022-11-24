@@ -1,8 +1,8 @@
 defmodule InventoryRoom.Factory do
   use ExMachina.Ecto, repo: StoreRepo.Repo
 
-  alias Inventory.Products.{
-    OptionType,
+  alias InventoryRoom.Products.{
+    OptionType
   }
 
   def option_type_factory do
