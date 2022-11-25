@@ -9,6 +9,7 @@
 
 defmodule InventoryRoom.Settings.Zones.State do
   use Ecto.Schema
+  import Ecto.Changeset
   alias InventoryRoom.Joins.ZoneMember
   alias InventoryRoom.Settings.Zones.Country
 
@@ -19,5 +20,23 @@ defmodule InventoryRoom.Settings.Zones.State do
     has_many :zone_members, ZoneMember
     has_many :zones, through: [:zone_members, :zone]
     timestamps()
+  end
+
+  def fields do
+		__MODULE__.__schema__(:fields) -- [:id, :inserted_at, :updated_at]
+	end
+
+	def changeset(params) when is_map(params), do: changeset(%__MODULE__{}, params)
+	def changeset(%__MODULE__{} = state, params) do
+		state |> cast(params, fields())
+	end
+
+	def create_changeset(params), do: create_changeset(%__MODULE__{}, params)
+	def create_changeset(%__MODULE__{} = state, params) do
+		state |> changeset(params)
+	end
+
+	def delete_changeset(%__MODULE__{} = state) do
+    state |> changeset(%{})
   end
 end

@@ -39,7 +39,8 @@ defmodule InventoryRoom.Factory do
   }
 
   alias InventoryRoom.Settings.Zones.{
-    Country
+    Country,
+    State
   }
 
   def option_type_factory do
@@ -316,6 +317,24 @@ defmodule InventoryRoom.Factory do
       name: country_name,
       numcode: numcode,
       states_required: Enum.random([true, false])
+    }
+  end
+
+  def state_factory do
+    country_factory = insert(:country)
+    country = country_factory          
+              |> Map.get(:iso)
+              |> Countries.get()
+    state = Countries.Subdivisions.all(country) |> Enum.random
+    state_name = state |> Map.get(:name)
+    state_abbr = state 
+                 |> Map.get(:id)
+                 |> to_string
+    
+    %State{
+      name: state_name,
+      abbr: state_abbr,
+      country_id: country_factory.id
     }
   end
 end

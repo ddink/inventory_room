@@ -41,7 +41,8 @@ defmodule InventoryRoom.DataCase do
   }
 
   alias InventoryRoom.Settings.Zones.{
-    Country
+    Country,
+    State
   }
 
 	using do
@@ -117,6 +118,7 @@ defmodule InventoryRoom.DataCase do
   def tax_category_fields, do: TaxCategory.fields()
 
   def country_fields, do: Country.fields()
+  def state_fields, do: State.fields()
 
 	def bad_option_type_params do
 		%{
@@ -295,6 +297,14 @@ defmodule InventoryRoom.DataCase do
       "name" => 0,
       "numcode" => %{},
       "states_required" => 0
+    }
+  end
+
+  def bad_state_params do
+    %{
+      "name" => %{},
+      "abbr" => 0,
+      "country_id" => "not_an_integer"
     }
   end
 
