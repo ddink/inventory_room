@@ -10,6 +10,7 @@ defmodule InventoryRoom.Factory do
   }
 
   alias InventoryRoom.Promotions.{
+    Promotion,
     PromotionCategory
   }
 
@@ -88,11 +89,39 @@ defmodule InventoryRoom.Factory do
 
   def promotion_category_factory do
     name = ["Weekly Sale", "Quarterly Sale", "Regular Discount", "Black Friday Sale"] |> Enum.random()
-    numbers = :rand.uniform(3) |> to_string
+    code = Faker.Lorem.characters(4) |> to_string
     
     %PromotionCategory{
       name: name,
-      code: "SALE" <> numbers
+      code: code
+    }
+  end
+
+  def promotion_factory do
+    expires_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                 |> NaiveDateTime.to_string
+    starts_at = NaiveDateTime.new!(~D[2021-01-01], ~T[00:00:00])
+                |> NaiveDateTime.to_string
+    name = ["Weekly Sale", "Quarterly Sale", "Regular Discount", "Black Friday Sale"] |> Enum.random()
+    type = ["one-time", "weekly"] |> Enum.random()
+    match_policy = ["any", "all"] |> Enum.random()
+    code = Faker.Lorem.characters(4) |> to_string
+    promotion_category = insert(:promotion_category)
+    
+    %Promotion{
+      description: Faker.Lorem.paragraph(),
+      expires_at: expires_at,
+      starts_at: starts_at,
+      name: name,
+      type: type,
+      usage_limit: Enum.random(1..10),
+      match_policy: match_policy,
+      code: code,
+      advertise: true,
+      path: "#{name}/",
+      promotion_category_id: promotion_category.id,
+      per_code_usage_limit: 1,
+      apply_automatically: true
     }
   end
 end

@@ -12,6 +12,7 @@ defmodule InventoryRoom.DataCase do
 	}
 
   alias InventoryRoom.Promotions.{
+    Promotion,
     PromotionCategory
   }
 
@@ -47,7 +48,7 @@ defmodule InventoryRoom.DataCase do
              valid?: false,
              errors: errors
            } = changeset
-
+           
     assert_error_fields(errors, fields, validation_type)
   end
 
@@ -68,6 +69,7 @@ defmodule InventoryRoom.DataCase do
   def property_fields, do: Property.fields()
   def taxonomy_fields, do: Taxonomy.fields()
   
+  def promotion_fields, do: Promotion.fields()
   def promotion_category_fields, do: PromotionCategory.fields()
 
 	def bad_option_type_params do
@@ -116,6 +118,25 @@ defmodule InventoryRoom.DataCase do
     %{
       "name" => 0,
       "code" => %{}
+    }
+  end
+
+  def bad_promotion_params do
+    %{
+      "description" => %{},
+      "expires_at" => 0,
+      "start_at" => NaiveDateTime.utc_now(),
+      "expires_at" => NaiveDateTime.utc_now(),
+      "name" => 0,
+      "type" => %{},
+      "usage_limit" => "not_an_integer",
+      "match_policy" => 0,
+      "code" => %{},
+      "advertise" => "not_true",
+      "path" => 0,
+      "promotion_category_id" => %{},
+      "per_code_usage_limit" => "not_an_integer",
+      "apply_automatically" => "not_false"
     }
   end
 
