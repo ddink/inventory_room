@@ -36,6 +36,10 @@ defmodule InventoryRoom.DataCase do
     CreditType
   }
 
+  alias InventoryRoom.Settings.Taxes.{
+    TaxCategory
+  }
+
 	using do
 		quote do
 			import InventoryRoom.DataCase
@@ -105,6 +109,8 @@ defmodule InventoryRoom.DataCase do
   def credit_category_fields, do: CreditCategory.fields()
   def credit_reason_fields, do: CreditReason.fields()
   def credit_type_fields, do: CreditType.fields()
+
+  def tax_category_fields, do: TaxCategory.fields()
 
 	def bad_option_type_params do
 		%{
@@ -263,6 +269,15 @@ defmodule InventoryRoom.DataCase do
       "user_id" => %{},
       "credit_category_id" => "not_an_id",
       "credit_type_id" => %{} 
+    }
+  end
+
+  def bad_tax_category_params do
+    %{
+      "name" => %{},
+      "description" => 0,
+      "is_default" => "not_false",
+      "tax_code" => %{}
     }
   end
 

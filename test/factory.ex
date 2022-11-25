@@ -34,6 +34,10 @@ defmodule InventoryRoom.Factory do
     CreditType
   }
 
+  alias InventoryRoom.Settings.Taxes.{
+    TaxCategory
+  }
+
   def option_type_factory do
     option = ["size", "color", "style"] |> Enum.random()
     
@@ -277,6 +281,18 @@ defmodule InventoryRoom.Factory do
       user_id: user.id,
       credit_category_id: credit_category.id,
       credit_type_id: credit_type.id
+    }
+  end
+
+  def tax_category_factory do
+    category = ["VAT", "Flat Tax"] |> Enum.random
+    tax_code = Faker.Lorem.characters(8) |> to_string
+    
+    %TaxCategory{
+      name: category,
+      description: Faker.Lorem.paragraph(),
+      is_default: Enum.random([true, false]),
+      tax_code: tax_code
     }
   end
 end
