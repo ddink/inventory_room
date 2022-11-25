@@ -16,6 +16,7 @@ defmodule InventoryRoom.Factory do
   }
 
   alias InventoryRoom.Settings.RefundsAndReturns.{
+    Adjustment,
     AdjustmentReason
   }
 
@@ -145,6 +146,24 @@ defmodule InventoryRoom.Factory do
       name: reason,
       code: reason,
       active: true
+    }
+  end
+
+  def adjustment_factory do
+    amount = FakerElixir.Number.decimal(2,2)
+             |> Decimal.new
+             |> Decimal.to_float
+    order = ShoppingCart.Factory.insert(:order)
+    promotion_code = insert(:promotion_code)
+    adjustment_reason = insert(:adjustment_reason)
+    
+    %Adjustment{
+      amount: amount,
+      label: "generic adjustment",
+      eligible: false,
+      order_id: promotion_code.id,
+      promotion_code_id: promotion_code.id,
+      adjustment_reason: adjustment_reason.id
     }
   end
 end
