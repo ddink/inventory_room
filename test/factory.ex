@@ -23,6 +23,10 @@ defmodule InventoryRoom.Factory do
     ReturnReason
   }
 
+  alias InventoryRoom.Settings.Shipping.{
+    ShippingCategory
+  }
+
   def option_type_factory do
     option = ["size", "color", "style"] |> Enum.random()
     
@@ -201,6 +205,14 @@ defmodule InventoryRoom.Factory do
       name: reason,
       active: Enum.random([true, false]),
       mutable: Enum.random([true, false]),
+    }
+  end
+
+  def shipping_category_factory do
+    category = ["ground freight shipping", "air freight shipping", "ground postal shipping"] |> Enum.random()
+    
+    %ShippingCategory{
+      name: category
     }
   end
 end

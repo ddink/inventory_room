@@ -25,6 +25,10 @@ defmodule InventoryRoom.DataCase do
     ReturnReason
   }
 
+  alias InventoryRoom.Settings.Shipping.{
+    ShippingCategory
+  }
+
 	using do
 		quote do
 			import InventoryRoom.DataCase
@@ -87,6 +91,8 @@ defmodule InventoryRoom.DataCase do
   def refund_reason_fields, do: RefundReason.fields()
   def reimbursement_type_fields, do: ReimbursementType.fields()
   def return_reason_fields, do: ReturnReason.fields()
+
+  def shipping_category_fields, do: ShippingCategory.fields()
 
 	def bad_option_type_params do
 		%{
@@ -204,6 +210,12 @@ defmodule InventoryRoom.DataCase do
       "name" => %{},
       "active" => "not_false",
       "mutable" => 0
+    }
+  end
+
+  def bad_shipping_category_params do
+    %{
+      "name" => %{}
     }
   end
 
