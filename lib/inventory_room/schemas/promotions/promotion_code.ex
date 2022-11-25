@@ -9,11 +9,30 @@
 
 defmodule InventoryRoom.Promotions.PromotionCode do
   use Ecto.Schema
+  import Ecto.Changeset
   alias InventoryRoom.Promotions.Promotion
 
   schema "promotion_codes" do
     belongs_to :promotion, Promotion
     field :value, :string
     timestamps()
+  end
+
+  def fields do
+    __MODULE__.__schema__(:fields) -- [:id, :inserted_at, :updated_at]
+  end
+
+  def changeset(params), do: changeset(%__MODULE__{}, params)
+  def changeset(%__MODULE__{} = promotion_code, params) do
+    promotion_code |> cast(params, fields())
+  end
+
+  def create_changeset(params), do: create_changeset(%__MODULE__{}, params)
+  def create_changeset(%__MODULE__{} = promotion_code, params) do
+    promotion_code |> changeset(params)
+  end
+
+  def delete_changeset(%__MODULE__{} = promotion_code) do
+    promotion_code |> changeset(%{})
   end
 end

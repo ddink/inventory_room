@@ -11,7 +11,8 @@ defmodule InventoryRoom.Factory do
 
   alias InventoryRoom.Promotions.{
     Promotion,
-    PromotionCategory
+    PromotionCategory,
+    PromotionCode
   }
 
   def option_type_factory do
@@ -105,8 +106,8 @@ defmodule InventoryRoom.Factory do
     name = ["Weekly Sale", "Quarterly Sale", "Regular Discount", "Black Friday Sale"] |> Enum.random()
     type = ["one-time", "weekly"] |> Enum.random()
     match_policy = ["any", "all"] |> Enum.random()
-    code = Faker.Lorem.characters(4) |> to_string
     promotion_category = insert(:promotion_category)
+    # code = insert(:promotion_code)
     
     %Promotion{
       description: Faker.Lorem.paragraph(),
@@ -116,12 +117,21 @@ defmodule InventoryRoom.Factory do
       type: type,
       usage_limit: Enum.random(1..10),
       match_policy: match_policy,
-      code: code,
       advertise: true,
       path: "#{name}/",
       promotion_category_id: promotion_category.id,
       per_code_usage_limit: 1,
       apply_automatically: true
+    }
+  end
+
+  def promotion_code_factory do
+    promotion = insert(:promotion)
+    code = Faker.Lorem.characters(4) |> to_string
+    
+    %PromotionCode{
+      promotion_id: promotion.id,
+      value: code
     }
   end
 end

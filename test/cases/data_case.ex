@@ -13,7 +13,8 @@ defmodule InventoryRoom.DataCase do
 
   alias InventoryRoom.Promotions.{
     Promotion,
-    PromotionCategory
+    PromotionCategory,
+    PromotionCode
   }
 
 	using do
@@ -71,6 +72,7 @@ defmodule InventoryRoom.DataCase do
   
   def promotion_fields, do: Promotion.fields()
   def promotion_category_fields, do: PromotionCategory.fields()
+  def promotion_code_fields, do: PromotionCode.fields()
 
 	def bad_option_type_params do
 		%{
@@ -124,7 +126,6 @@ defmodule InventoryRoom.DataCase do
   def bad_promotion_params do
     %{
       "description" => %{},
-      "expires_at" => 0,
       "start_at" => NaiveDateTime.utc_now(),
       "expires_at" => NaiveDateTime.utc_now(),
       "name" => 0,
@@ -137,6 +138,13 @@ defmodule InventoryRoom.DataCase do
       "promotion_category_id" => %{},
       "per_code_usage_limit" => "not_an_integer",
       "apply_automatically" => "not_false"
+    }
+  end
+
+  def bad_promotion_code_params do
+    %{
+      "promotion_id" => "not_an_integer",
+      "value" => %{}
     }
   end
 
