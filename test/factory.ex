@@ -10,7 +10,8 @@ defmodule InventoryRoom.Factory do
     Taxonomy,
     Product,
     ProductImage,
-    Variant
+    Variant,
+    VariantImage
   }
 
   alias InventoryRoom.Promotions.{
@@ -490,6 +491,19 @@ defmodule InventoryRoom.Factory do
       cost_currency: currency_code,
       track_inventory: Enum.random([true, false]),
       tax_category_id: tax_category.id
+    }
+  end
+
+  def variant_image_factory do
+    variant = insert(:variant)
+    product = insert(:product)
+    image_id = Enum.random(1..10)
+
+    %VariantImage{
+      variant_id: variant.id,
+      alt_text: Faker.Lorem.sentence(5, ""),
+      url: "#{product.slug}/images/#{image_id}",
+      file: "#{product.name}_#{image_id}.jpg"
     }
   end
 end

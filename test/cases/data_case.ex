@@ -12,7 +12,8 @@ defmodule InventoryRoom.DataCase do
     Property,
     Taxon,
     Taxonomy,
-    Variant
+    Variant,
+    VariantImage
 	}
 
   alias InventoryRoom.Promotions.{
@@ -112,6 +113,7 @@ defmodule InventoryRoom.DataCase do
   def taxon_fields, do: Taxon.fields()
   def taxonomy_fields, do: Taxonomy.fields()
   def variant_fields, do: Variant.fields()
+  def variant_image_fields, do: VariantImage.fields()
   
   # Promotions Schemas
   def promotion_fields, do: Promotion.fields()
@@ -429,6 +431,16 @@ defmodule InventoryRoom.DataCase do
       "cost_currency" => 0,
       "track_inventory" => %{},
       "tax_category_id" => "not_a_integer"
+    }
+  end
+
+  def bad_variant_image_params do
+    %{
+      "file" => %{},
+      "product_id" => "not_an_integer",
+      "alt_text" => 0,
+      "url" => %{},
+      "variant_id" => %{}
     }
   end
 
