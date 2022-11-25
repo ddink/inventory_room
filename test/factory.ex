@@ -38,6 +38,10 @@ defmodule InventoryRoom.Factory do
     TaxCategory
   }
 
+  alias InventoryRoom.Settings.Zones.{
+    Country
+  }
+
   def option_type_factory do
     option = ["size", "color", "style"] |> Enum.random()
     
@@ -293,6 +297,25 @@ defmodule InventoryRoom.Factory do
       description: Faker.Lorem.paragraph(),
       is_default: Enum.random([true, false]),
       tax_code: tax_code
+    }
+  end
+
+  def country_factory do
+    country = Countries.all() |> Enum.random() 
+    country_name = country |> Map.get(:name)
+    country_iso = country |> Map.get(:alpha2)
+    country_iso3 = country |> Map.get(:alpha3)
+    numcode = country 
+              |> Map.get(:number) 
+              |> String.to_integer
+
+    %Country{
+      iso_name: country_name,
+      iso: country_iso,
+      iso3: country_iso3,
+      name: country_name,
+      numcode: numcode,
+      states_required: Enum.random([true, false])
     }
   end
 end

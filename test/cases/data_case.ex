@@ -40,6 +40,10 @@ defmodule InventoryRoom.DataCase do
     TaxCategory
   }
 
+  alias InventoryRoom.Settings.Zones.{
+    Country
+  }
+
 	using do
 		quote do
 			import InventoryRoom.DataCase
@@ -111,6 +115,8 @@ defmodule InventoryRoom.DataCase do
   def credit_type_fields, do: CreditType.fields()
 
   def tax_category_fields, do: TaxCategory.fields()
+
+  def country_fields, do: Country.fields()
 
 	def bad_option_type_params do
 		%{
@@ -278,6 +284,17 @@ defmodule InventoryRoom.DataCase do
       "description" => 0,
       "is_default" => "not_false",
       "tax_code" => %{}
+    }
+  end
+
+  def bad_country_params do
+    %{
+      "iso_name" => %{},
+      "iso" => 0,
+      "iso3" => %{},
+      "name" => 0,
+      "numcode" => %{},
+      "states_required" => 0
     }
   end
 
