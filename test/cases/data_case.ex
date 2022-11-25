@@ -10,6 +10,7 @@ defmodule InventoryRoom.DataCase do
     Product,
     ProductImage,
     Property,
+    Taxon,
     Taxonomy
 	}
 
@@ -107,6 +108,7 @@ defmodule InventoryRoom.DataCase do
   def product_fields, do: Product.required_fields()
   def product_image_fields(), do: ProductImage.required_fields()
   def property_fields, do: Property.fields()
+  def taxon_fields, do: Taxon.fields()
   def taxonomy_fields, do: Taxonomy.fields()
   
   # Promotions Schemas
@@ -174,6 +176,24 @@ defmodule InventoryRoom.DataCase do
     %{
       "name" => %{},
       "presentation" => 0
+    }
+  end
+
+  def bad_taxon_params do
+    %{
+      "parent_id" => "not_an_integer",
+      "position" => %{},
+      "name" => 0,
+      "permalink" => %{},
+      "taxonomy_id" => NaiveDateTime.utc_now(),
+      "icon_file_name" => 0,
+      "icon_content_type" => %{},
+      "icon_file_size" => "not_an_integer",
+      "icon_updated_at" => 0,
+      "description" => %{},
+      "meta_title" => 0,
+      "meta_description" => %{},
+      "meta_keywords" => 0
     }
   end
 

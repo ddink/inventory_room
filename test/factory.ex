@@ -6,6 +6,7 @@ defmodule InventoryRoom.Factory do
     OptionValue,
     Price,
     Property,
+    Taxon,
     Taxonomy,
     Product,
     ProductImage
@@ -112,6 +113,30 @@ defmodule InventoryRoom.Factory do
     %Property{
       name: name,
       presentation: presentation
+    }
+  end
+
+  def taxon_factory do
+    name = ["Long-sleeve", "Short-sleeve", "Collared", "Polo"] |> Enum.random()
+    taxonomy = insert(:taxonomy)
+    product_image = insert(:product_image)
+    icon_updated_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                 |> NaiveDateTime.to_string
+    
+    %Taxon{
+      parent_id: Enum.random(1..10),
+      position: Enum.random(1..10),
+      name: name,
+      permalink: "/#{name}",
+      taxonomy_id: taxonomy.id,
+      icon_file_name: product_image.file,
+      icon_content_type: "image",
+      icon_file_size: Enum.random(20..40),
+      icon_updated_at: icon_updated_at,
+      description: Faker.Lorem.paragraph(),
+      meta_description: Faker.Lorem.paragraph(),
+      meta_keywords: Faker.Lorem.sentence(10, ""),
+      meta_title: String.capitalize(Faker.Lorem.word())
     }
   end
 
