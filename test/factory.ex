@@ -27,6 +27,10 @@ defmodule InventoryRoom.Factory do
     ShippingCategory
   }
 
+  alias InventoryRoom.Settings.StoreCredits.{
+    CreditCategory
+  }
+
   def option_type_factory do
     option = ["size", "color", "style"] |> Enum.random()
     
@@ -212,6 +216,15 @@ defmodule InventoryRoom.Factory do
     category = ["ground freight shipping", "air freight shipping", "ground postal shipping"] |> Enum.random()
     
     %ShippingCategory{
+      name: category
+    }
+  end
+
+  def credit_category_factory do
+    category = ["store credit", "company credit", "brand credit"] 
+               |> Enum.random
+    
+    %CreditCategory{
       name: category
     }
   end
