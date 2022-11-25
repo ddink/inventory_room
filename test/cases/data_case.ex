@@ -17,6 +17,10 @@ defmodule InventoryRoom.DataCase do
     PromotionCode
   }
 
+  alias InventoryRoom.Settings.RefundsAndReturns.{
+    AdjustmentReason
+  }
+
 	using do
 		quote do
 			import InventoryRoom.DataCase
@@ -73,6 +77,8 @@ defmodule InventoryRoom.DataCase do
   def promotion_fields, do: Promotion.fields()
   def promotion_category_fields, do: PromotionCategory.fields()
   def promotion_code_fields, do: PromotionCode.fields()
+
+  def adjustment_reason_fields, do: AdjustmentReason.fields()
 
 	def bad_option_type_params do
 		%{
@@ -145,6 +151,14 @@ defmodule InventoryRoom.DataCase do
     %{
       "promotion_id" => "not_an_integer",
       "value" => %{}
+    }
+  end
+
+  def bad_adjustment_reason_params do
+    %{
+      "name" => 0,
+      "code" => false,
+      "active" => %{}
     }
   end
 

@@ -15,6 +15,10 @@ defmodule InventoryRoom.Factory do
     PromotionCode
   }
 
+  alias InventoryRoom.Settings.RefundsAndReturns.{
+    AdjustmentReason
+  }
+
   def option_type_factory do
     option = ["size", "color", "style"] |> Enum.random()
     
@@ -132,6 +136,15 @@ defmodule InventoryRoom.Factory do
     %PromotionCode{
       promotion_id: promotion.id,
       value: code
+    }
+  end
+
+  def adjustment_reason_factory do
+    reason = ["price change", "transaction misfunction", "out of stock"] |> Enum.random()
+    %AdjustmentReason{
+      name: reason,
+      code: reason,
+      active: true
     }
   end
 end
