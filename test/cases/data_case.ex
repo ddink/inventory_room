@@ -46,6 +46,10 @@ defmodule InventoryRoom.DataCase do
     Zone
   }
 
+  alias InventoryRoom.Settings.{
+    PaymentMethod
+  }
+
 	using do
 		quote do
 			import InventoryRoom.DataCase
@@ -128,6 +132,9 @@ defmodule InventoryRoom.DataCase do
   def country_fields, do: Country.fields()
   def state_fields, do: State.fields()
   def zone_fields, do: Zone.fields()
+
+  # Setting Schemas
+  def payment_method_fields, do: PaymentMethod.fields()
 
 	def bad_option_type_params do
 		%{
@@ -324,6 +331,18 @@ defmodule InventoryRoom.DataCase do
       "zone_members_count" => "not_an_integer",
       "type" => %{},
       "default_tax" => 0
+    }
+  end
+
+  def bad_payment_method_params do
+    %{
+      "name" => %{},
+      "type" => 0,
+      "description" => true,
+      "active" => %{},
+      "available_to_users" => "not_false",
+      "available_to_admin" => 0,
+    "auto_capture" => %{}
     }
   end
 

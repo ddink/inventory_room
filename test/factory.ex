@@ -44,6 +44,10 @@ defmodule InventoryRoom.Factory do
     Zone
   }
 
+  alias InventoryRoom.Settings.{
+    PaymentMethod
+  }
+
   def option_type_factory do
     option = ["size", "color", "style"] |> Enum.random()
     
@@ -349,6 +353,20 @@ defmodule InventoryRoom.Factory do
       zone_members_count: Enum.random(3..30),
       type: type,
       default_tax: Enum.random([true, false])
+    }
+  end
+
+  def payment_method_factory do
+    type = ["credit card", "bank transfer", "remittance"] |> Enum.random
+    name = ["VISA", "MASTERCARD", "EFECTY", "BANK_REFERENCED"] |> Enum.random
+    
+    %PaymentMethod{
+      type: type,
+      name: name,
+      description: Faker.Lorem.paragraph(),
+      active: Enum.random([true, false]),
+      available_to_users: Enum.random([true, false]),
+      available_to_admin: Enum.random([true, false])
     }
   end
 end
