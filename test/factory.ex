@@ -6,7 +6,8 @@ defmodule InventoryRoom.Factory do
     OptionValue,
     Price,
     Property,
-    Taxonomy
+    Taxonomy,
+    Product
   }
 
   alias InventoryRoom.Promotions.{
@@ -393,6 +394,33 @@ defmodule InventoryRoom.Factory do
       currency: currency_code,
       default: Enum.random([true, false]),
       cart_tax_country_iso: country_iso
+    }
+  end
+
+  def product_factory do
+    name = Faker.Commerce.product_name()
+    available_on = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                   |> NaiveDateTime.to_string
+    discontinue_on = NaiveDateTime.utc_now |> NaiveDateTime.to_string
+    code = Faker.Lorem.characters(4) |> to_string
+    master_sku_name = name
+                 |> String.split
+                 |> List.first
+    shipping_category = insert(:shipping_category)
+    tax_category = insert(:tax_category)
+
+    %Product{
+      name: name,
+      slug: "/#{name}",
+      description: Faker.Lorem.paragraph(),
+      meta_title: String.capitalize(Faker.Lorem.word()),
+      meta_keywords: Faker.Lorem.sentence(10, ""),
+      available_on: available_on,
+      discontinue_on: discontinue_on,
+      promotionable: Enum.random([true, false]),
+      master_sku: "#{master_sku_name}-001",
+      shipping_category_id: shipping_category.id,
+      tax_category_id: tax_category.id
     }
   end
 end

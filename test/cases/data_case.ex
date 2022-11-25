@@ -7,6 +7,7 @@ defmodule InventoryRoom.DataCase do
 		OptionType,
     OptionValue,
     Price,
+    Product,
     Property,
     Taxonomy
 	}
@@ -102,6 +103,7 @@ defmodule InventoryRoom.DataCase do
   def option_value_fields, do: OptionValue.fields()
   def price_fields, do: Price.fields()
   def price_required_fields, do: Price.required_fields()
+  def product_fields, do: Product.required_fields()
   def property_fields, do: Property.fields()
   def taxonomy_fields, do: Taxonomy.fields()
   
@@ -360,6 +362,22 @@ defmodule InventoryRoom.DataCase do
       "default" => 0,
       "cart_tax_country_iso" => %{},
       "mail_from_address" => 0
+    }
+  end
+
+  def bad_product_params do
+    %{
+      "name" => %{},
+      "slug" => 0,
+      "description" => %{},
+      "meta_title" => 0,
+      "meta_keywords" => %{},
+      "available_on" => 0,
+      "discontinue_on" => %{},
+      "promotionable" => 0,
+      "master_sku" => %{},
+      "shipping_category_id" => 0,
+      "tax_category_id" => %{}
     }
   end
 

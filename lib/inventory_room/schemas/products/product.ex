@@ -20,6 +20,7 @@
 
 defmodule InventoryRoom.Products.Product do
 	use Ecto.Schema
+	import Ecto.Changeset
 	alias InventoryRoom.Joins.{
 		ProductOptionType,
 		ProductTaxon
@@ -55,4 +56,28 @@ defmodule InventoryRoom.Products.Product do
 		# embeds_many(:stocks, Stock)
 		timestamps()
 	end
+
+	def fields do
+		__MODULE__.__schema__(:fields) -- [:id, :inserted_at, :updated_at]
+	end
+
+  def required_fields do
+    [:name]
+  end
+
+	def changeset(params) when is_map(params), do: changeset(%__MODULE__{}, params)
+	def changeset(%__MODULE__{} = product, params) do
+		product |> cast(params, fields())
+	end
+
+	def create_changeset(params), do: create_changeset(%__MODULE__{}, params)
+	def create_changeset(%__MODULE__{} = product, params) do
+		product 
+    |> changeset(params)
+    |> validate_required(required_fields())
+	end
+
+	def delete_changeset(%__MODULE__{} = product) do
+    product |> changeset(%{})
+  end
 end
