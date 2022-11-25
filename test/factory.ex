@@ -45,7 +45,8 @@ defmodule InventoryRoom.Factory do
   }
 
   alias InventoryRoom.Settings.{
-    PaymentMethod
+    PaymentMethod,
+    Store
   }
 
   def option_type_factory do
@@ -367,6 +368,31 @@ defmodule InventoryRoom.Factory do
       active: Enum.random([true, false]),
       available_to_users: Enum.random([true, false]),
       available_to_admin: Enum.random([true, false])
+    }
+  end
+
+  def store_factory do
+    name = Faker.Commerce.product_name()
+    slug = name
+           |> String.downcase
+           |> String.split
+           |> Enum.join("_")
+    currency_code = ["USD", "EUR", "GBP"] |> Enum.random()
+    country_iso = Countries.filter_by(:currency_code, currency_code) 
+                  |> Enum.random() 
+                  |> Map.get(:alpha2)
+    
+    %Store{
+      name: "#{name} store",
+      url: "https://www.#{slug}.com",
+      meta_description: Faker.Lorem.paragraph(),
+      meta_keywords: Faker.Lorem.sentence(10, ""),
+      seo_title: String.capitalize(Faker.Lorem.word()),
+      mail_from_address: Faker.Internet.email(),
+      default_currency: "USD",
+      currency: currency_code,
+      default: Enum.random([true, false]),
+      cart_tax_country_iso: country_iso
     }
   end
 end

@@ -47,7 +47,8 @@ defmodule InventoryRoom.DataCase do
   }
 
   alias InventoryRoom.Settings.{
-    PaymentMethod
+    PaymentMethod,
+    Store
   }
 
 	using do
@@ -135,6 +136,7 @@ defmodule InventoryRoom.DataCase do
 
   # Setting Schemas
   def payment_method_fields, do: PaymentMethod.fields()
+  def store_fields, do: Store.fields()
 
 	def bad_option_type_params do
 		%{
@@ -343,6 +345,21 @@ defmodule InventoryRoom.DataCase do
       "available_to_users" => "not_false",
       "available_to_admin" => 0,
     "auto_capture" => %{}
+    }
+  end
+
+  def bad_store_params do
+    %{
+      "name" => %{},
+      "url" => 0,
+      "meta_description" => %{},
+      "meta_keywords" => 0,
+      "seo_title" => %{},
+      "default_currency" => 0,
+      "currency" => %{},
+      "default" => 0,
+      "cart_tax_country_iso" => %{},
+      "mail_from_address" => 0
     }
   end
 
