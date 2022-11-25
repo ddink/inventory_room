@@ -21,7 +21,8 @@ defmodule InventoryRoom.DataCase do
     Adjustment,
     AdjustmentReason,
     RefundReason,
-    ReimbursementType
+    ReimbursementType,
+    ReturnReason
   }
 
 	using do
@@ -85,6 +86,7 @@ defmodule InventoryRoom.DataCase do
   def adjustment_reason_fields, do: AdjustmentReason.fields()
   def refund_reason_fields, do: RefundReason.fields()
   def reimbursement_type_fields, do: ReimbursementType.fields()
+  def return_reason_fields, do: ReturnReason.fields()
 
 	def bad_option_type_params do
 		%{
@@ -194,6 +196,14 @@ defmodule InventoryRoom.DataCase do
       "active" => "not_false",
       "mutable" => 0,
       "type" => %{}
+    }
+  end
+
+  def bad_return_reason_params do
+    %{
+      "name" => %{},
+      "active" => "not_false",
+      "mutable" => 0
     }
   end
 

@@ -19,7 +19,8 @@ defmodule InventoryRoom.Factory do
     Adjustment,
     AdjustmentReason,
     RefundReason,
-    ReimbursementType
+    ReimbursementType,
+    ReturnReason
   }
 
   def option_type_factory do
@@ -190,6 +191,16 @@ defmodule InventoryRoom.Factory do
       active: Enum.random([true, false]),
       mutable: Enum.random([true, false]),
       type: type
+    }
+  end
+
+  def return_reason_factory do
+    reason = ["bad product", "opened packaging", "not as requested"] |> Enum.random()
+
+    %ReturnReason{
+      name: reason,
+      active: Enum.random([true, false]),
+      mutable: Enum.random([true, false]),
     }
   end
 end
