@@ -20,6 +20,7 @@
 
 defmodule InventoryRoom.Settings.StoreCredits.Credit do
   use Ecto.Schema
+  import Ecto.Changeset
   alias InventoryRoom.Settings.StoreCredits.{CreditCategory, CreditType}
   alias ShoppingCart.Schemas.User # will likely need to replace with Accounts.User or something like that
 
@@ -37,5 +38,37 @@ defmodule InventoryRoom.Settings.StoreCredits.Credit do
     belongs_to :credit_category, CreditCategory
     belongs_to :credit_type, CreditType
     timestamps()
+  end
+
+  def fields do
+		__MODULE__.__schema__(:fields) -- [:id, :inserted_at, :updated_at]
+	end
+
+  def decimal_fields do
+    [:amount, :amount_used, :amount_authorized]
+  end
+
+  def naive_datetime_fields do
+    [:deleted_at, :invalidated_at]
+  end
+
+  def required_fields do
+    decimal_fields()
+  end
+
+	def changeset(params) when is_map(params), do: changeset(%__MODULE__{}, params)
+	def changeset(%__MODULE__{} = credit, params) do
+		credit |> cast(params, fields())
+	end
+
+	def create_changeset(params), do: create_changeset(%__MODULE__{}, params)
+	def create_changeset(%__MODULE__{} = credit, params) do
+		credit 
+    |> changeset(params)
+    |> validate_required(required_fields())
+	end
+
+	def delete_changeset(%__MODULE__{} = credit) do
+    credit |> changeset(%{})
   end
 end

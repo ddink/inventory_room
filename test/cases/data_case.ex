@@ -30,6 +30,7 @@ defmodule InventoryRoom.DataCase do
   }
 
   alias InventoryRoom.Settings.StoreCredits.{
+    Credit,
     CreditCategory,
     CreditReason,
     CreditType
@@ -100,6 +101,7 @@ defmodule InventoryRoom.DataCase do
 
   def shipping_category_fields, do: ShippingCategory.fields()
 
+  def credit_fields, do: Credit.fields()
   def credit_category_fields, do: CreditCategory.fields()
   def credit_reason_fields, do: CreditReason.fields()
   def credit_type_fields, do: CreditType.fields()
@@ -245,6 +247,22 @@ defmodule InventoryRoom.DataCase do
     %{
       "name" => %{},
       "priority" => "not_an_integer"
+    }
+  end
+
+  def bad_credit_params do
+    %{
+      "amount" => %{},
+      "amount_used" => "not_an_integer",
+      "amount_authorized" => NaiveDateTime.utc_now(),
+      "currency" => %{},
+      "memo" => 0,
+      "deleted_at" => %{},
+      "invalidated_at" => 0,
+      "created_by_id" => "not_an_id",
+      "user_id" => %{},
+      "credit_category_id" => "not_an_id",
+      "credit_type_id" => %{} 
     }
   end
 

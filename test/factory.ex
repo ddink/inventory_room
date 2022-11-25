@@ -28,6 +28,7 @@ defmodule InventoryRoom.Factory do
   }
 
   alias InventoryRoom.Settings.StoreCredits.{
+    Credit,
     CreditCategory,
     CreditReason,
     CreditType
@@ -246,6 +247,36 @@ defmodule InventoryRoom.Factory do
     %CreditType{
       name: type,
       priority: Enum.random(1..5)
+    }
+  end
+
+  def credit_factory do
+    amount = FakerElixir.Number.decimal(2,2)
+             |> Decimal.new
+             |> Decimal.to_float
+    amount_used = amount / 2
+    amount_authorized = amount * 0.8
+    credit_category = insert(:credit_category)
+    credit_type = insert(:credit_type)
+    currency_code = ["USD", "EUR", "GBP"] |> Enum.random()
+    deleted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                 |> NaiveDateTime.to_string
+    invalidated_at = NaiveDateTime.new!(~D[2021-12-31], ~T[00:00:00])
+                 |> NaiveDateTime.to_string
+    user = ShoppingCart.Factory.insert(:user)
+    
+    %Credit{
+      amount: amount,
+      amount_used: amount_used,
+      amount_authorized: amount_authorized,
+      currency: currency_code,
+      memo: Faker.Lorem.paragraph(),
+      deleted_at: deleted_at,
+      invalidated_at: invalidated_at,
+      created_by_id: user.id,
+      user_id: user.id,
+      credit_category_id: credit_category.id,
+      credit_type_id: credit_type.id
     }
   end
 end
