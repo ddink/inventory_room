@@ -8,6 +8,7 @@ defmodule InventoryRoom.DataCase do
     OptionValue,
     Price,
     Product,
+    ProductImage,
     Property,
     Taxonomy
 	}
@@ -104,6 +105,7 @@ defmodule InventoryRoom.DataCase do
   def price_fields, do: Price.fields()
   def price_required_fields, do: Price.required_fields()
   def product_fields, do: Product.required_fields()
+  def product_image_fields(), do: ProductImage.required_fields()
   def property_fields, do: Property.fields()
   def taxonomy_fields, do: Taxonomy.fields()
   
@@ -378,6 +380,15 @@ defmodule InventoryRoom.DataCase do
       "master_sku" => %{},
       "shipping_category_id" => 0,
       "tax_category_id" => %{}
+    }
+  end
+
+  def bad_product_image_params do
+    %{
+      "file" => %{},
+      "product_id" => "not_an_integer",
+      "alt_text" => 0,
+      "url" => %{}
     }
   end
 

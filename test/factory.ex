@@ -7,7 +7,8 @@ defmodule InventoryRoom.Factory do
     Price,
     Property,
     Taxonomy,
-    Product
+    Product,
+    ProductImage
   }
 
   alias InventoryRoom.Promotions.{
@@ -421,6 +422,18 @@ defmodule InventoryRoom.Factory do
       master_sku: "#{master_sku_name}-001",
       shipping_category_id: shipping_category.id,
       tax_category_id: tax_category.id
+    }
+  end
+
+  def product_image_factory do
+    product = insert(:product)
+    image_id = Enum.random(1..10)
+
+    %ProductImage{
+      product_id: product.id,
+      alt_text: Faker.Lorem.sentence(5, ""),
+      url: "#{product.slug}/images/#{image_id}",
+      file: "#{product.name}_#{image_id}.jpg"
     }
   end
 end
