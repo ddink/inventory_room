@@ -23,6 +23,7 @@
 
 defmodule InventoryRoom.Products.Variant do
   use Ecto.Schema
+  import Ecto.Changeset
   alias InventoryRoom.Joins.VariantOptionValue
   alias InventoryRoom.Products.{Product, VariantImage}
   alias InventoryRoom.Settings.Taxes.TaxCategory
@@ -47,5 +48,29 @@ defmodule InventoryRoom.Products.Variant do
     has_many :variant_option_values, VariantOptionValue
     has_many :option_values, through: [:variant_option_values, :option_value]
     timestamps()
+  end
+
+  def fields do
+		__MODULE__.__schema__(:fields) -- [:id, :inserted_at, :updated_at]
+	end
+
+  def required_fields do
+    [:sku]
+  end
+
+	def changeset(params) when is_map(params), do: changeset(%__MODULE__{}, params)
+	def changeset(%__MODULE__{} = variant, params) do
+		variant |> cast(params, fields())
+	end
+
+	def create_changeset(params), do: create_changeset(%__MODULE__{}, params)
+	def create_changeset(%__MODULE__{} = variant, params) do
+		variant 
+    |> changeset(params)
+    |> validate_required(required_fields())
+	end
+
+	def delete_changeset(%__MODULE__{} = variant) do
+    variant |> changeset(%{})
   end
 end

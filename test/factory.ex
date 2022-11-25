@@ -9,7 +9,8 @@ defmodule InventoryRoom.Factory do
     Taxon,
     Taxonomy,
     Product,
-    ProductImage
+    ProductImage,
+    Variant
   }
 
   alias InventoryRoom.Promotions.{
@@ -444,7 +445,7 @@ defmodule InventoryRoom.Factory do
       available_on: available_on,
       discontinue_on: discontinue_on,
       promotionable: Enum.random([true, false]),
-      master_sku: "#{master_sku_name}-001",
+      master_sku: "#{master_sku_name}",
       shipping_category_id: shipping_category.id,
       tax_category_id: tax_category.id
     }
@@ -459,6 +460,36 @@ defmodule InventoryRoom.Factory do
       alt_text: Faker.Lorem.sentence(5, ""),
       url: "#{product.slug}/images/#{image_id}",
       file: "#{product.name}_#{image_id}.jpg"
+    }
+  end
+
+  def variant_factory do
+    product = insert(:product)
+    size = FakerElixir.Number.decimal(1,1)
+           |> Decimal.new
+           |> Decimal.to_float
+    price = FakerElixir.Number.decimal(2,2)
+           |> Decimal.new
+           |> Decimal.to_float
+    deleted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                 |> NaiveDateTime.to_string
+    currency_code = ["USD", "EUR", "GBP"] |> Enum.random()
+    tax_category = insert(:tax_category)
+
+    %Variant{
+      sku: "#{product.master_sku}-00#{Enum.random(1..9)}",
+      weight: size,
+      height: size,
+      width: size,
+      depth: size,
+      deleted_at: deleted_at,
+      is_master: Enum.random([true, false]),
+      product_id: product.id,
+      cost_price: price,
+      position: Enum.random(1..10),
+      cost_currency: currency_code,
+      track_inventory: Enum.random([true, false]),
+      tax_category_id: tax_category.id
     }
   end
 end
