@@ -18,7 +18,8 @@ defmodule InventoryRoom.Factory do
   alias InventoryRoom.Settings.RefundsAndReturns.{
     Adjustment,
     AdjustmentReason,
-    RefundReason
+    RefundReason,
+    ReimbursementType
   }
 
   def option_type_factory do
@@ -177,6 +178,18 @@ defmodule InventoryRoom.Factory do
       active: Enum.random([true, false]),
       mutable: Enum.random([true, false]),
       code: code
+    }
+  end
+
+  def reimbursement_type_factory do
+    reimbursement = ["refund", "complementary product"] |> Enum.random()
+    type = ["refund", "gift"] |> Enum.random()
+    
+    %ReimbursementType{
+      name: reimbursement,
+      active: Enum.random([true, false]),
+      mutable: Enum.random([true, false]),
+      type: type
     }
   end
 end
