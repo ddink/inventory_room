@@ -17,7 +17,8 @@ defmodule InventoryRoom.Factory do
 
   alias InventoryRoom.Settings.RefundsAndReturns.{
     Adjustment,
-    AdjustmentReason
+    AdjustmentReason,
+    RefundReason
   }
 
   def option_type_factory do
@@ -160,10 +161,22 @@ defmodule InventoryRoom.Factory do
     %Adjustment{
       amount: amount,
       label: "generic adjustment",
-      eligible: false,
-      order_id: promotion_code.id,
+      eligible: Enum.random([true, false]),
+      order_id: order.id,
       promotion_code_id: promotion_code.id,
       adjustment_reason: adjustment_reason.id
+    }
+  end
+
+  def refund_reason_factory do
+    reason = ["bad product", "mispurchase", "out of stock"] |> Enum.random()
+    code = Faker.Lorem.characters(4) |> to_string
+    
+    %RefundReason{
+      name: reason,
+      active: Enum.random([true, false]),
+      mutable: Enum.random([true, false]),
+      code: code
     }
   end
 end
