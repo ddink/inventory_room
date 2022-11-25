@@ -30,7 +30,8 @@ defmodule InventoryRoom.DataCase do
   }
 
   alias InventoryRoom.Settings.StoreCredits.{
-    CreditCategory
+    CreditCategory,
+    CreditReason
   }
 
 	using do
@@ -99,6 +100,7 @@ defmodule InventoryRoom.DataCase do
   def shipping_category_fields, do: ShippingCategory.fields()
 
   def credit_category_fields, do: CreditCategory.fields()
+  def credit_reason_fields, do: CreditReason.fields()
 
 	def bad_option_type_params do
 		%{
@@ -226,6 +228,12 @@ defmodule InventoryRoom.DataCase do
   end
 
   def bad_credit_category_params do
+    %{
+      "name" => %{}
+    }
+  end
+
+  def bad_credit_reason_params do
     %{
       "name" => %{}
     }

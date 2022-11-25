@@ -28,7 +28,8 @@ defmodule InventoryRoom.Factory do
   }
 
   alias InventoryRoom.Settings.StoreCredits.{
-    CreditCategory
+    CreditCategory,
+    CreditReason
   }
 
   def option_type_factory do
@@ -226,6 +227,15 @@ defmodule InventoryRoom.Factory do
     
     %CreditCategory{
       name: category
+    }
+  end
+
+  def credit_reason_factory do
+    reason = ["reimbursement", "exclusive discount", "sale"]
+             |> Enum.random
+
+    %CreditReason{
+      name: reason
     }
   end
 end
