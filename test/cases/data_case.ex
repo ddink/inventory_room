@@ -42,7 +42,8 @@ defmodule InventoryRoom.DataCase do
 
   alias InventoryRoom.Settings.Zones.{
     Country,
-    State
+    State,
+    Zone
   }
 
 	using do
@@ -91,6 +92,7 @@ defmodule InventoryRoom.DataCase do
     end
   end
 
+  # Products Schemas
 	def option_type_fields, do: OptionType.fields()
   def option_value_fields, do: OptionValue.fields()
   def price_fields, do: Price.fields()
@@ -98,27 +100,34 @@ defmodule InventoryRoom.DataCase do
   def property_fields, do: Property.fields()
   def taxonomy_fields, do: Taxonomy.fields()
   
+  # Promotions Schemas
   def promotion_fields, do: Promotion.fields()
   def promotion_category_fields, do: PromotionCategory.fields()
   def promotion_code_fields, do: PromotionCode.fields()
 
+  # Refunds and Reasons Schemas
   def adjustment_fields, do: Adjustment.fields()
   def adjustment_reason_fields, do: AdjustmentReason.fields()
   def refund_reason_fields, do: RefundReason.fields()
   def reimbursement_type_fields, do: ReimbursementType.fields()
   def return_reason_fields, do: ReturnReason.fields()
 
+  # Shipping Schemas
   def shipping_category_fields, do: ShippingCategory.fields()
 
+  # Store Credit Schemas
   def credit_fields, do: Credit.fields()
   def credit_category_fields, do: CreditCategory.fields()
   def credit_reason_fields, do: CreditReason.fields()
   def credit_type_fields, do: CreditType.fields()
 
+  # Tax Schemas
   def tax_category_fields, do: TaxCategory.fields()
 
+  # Zone Schemas
   def country_fields, do: Country.fields()
   def state_fields, do: State.fields()
+  def zone_fields, do: Zone.fields()
 
 	def bad_option_type_params do
 		%{
@@ -305,6 +314,16 @@ defmodule InventoryRoom.DataCase do
       "name" => %{},
       "abbr" => 0,
       "country_id" => "not_an_integer"
+    }
+  end
+
+  def bad_zone_params do
+    %{
+      "name" => %{},
+      "description" => 0,
+      "zone_members_count" => "not_an_integer",
+      "type" => %{},
+      "default_tax" => 0
     }
   end
 

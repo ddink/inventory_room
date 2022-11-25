@@ -40,7 +40,8 @@ defmodule InventoryRoom.Factory do
 
   alias InventoryRoom.Settings.Zones.{
     Country,
-    State
+    State,
+    Zone
   }
 
   def option_type_factory do
@@ -335,6 +336,19 @@ defmodule InventoryRoom.Factory do
       name: state_name,
       abbr: state_abbr,
       country_id: country_factory.id
+    }
+  end
+
+  def zone_factory do
+    name = ["North America", "EU Zone", "Caribbean"] |> Enum.random
+    type = ["country-based", "state-based"] |> Enum.random
+    
+    %Zone{
+      name: name,
+      description: Faker.Lorem.paragraph(),
+      zone_members_count: Enum.random(3..30),
+      type: type,
+      default_tax: Enum.random([true, false])
     }
   end
 end
