@@ -42,7 +42,8 @@ defmodule InventoryRoom.DataCase do
   }
 
   alias InventoryRoom.Settings.Taxes.{
-    TaxCategory
+    TaxCategory,
+    TaxRate
   }
 
   alias InventoryRoom.Settings.Zones.{
@@ -138,6 +139,7 @@ defmodule InventoryRoom.DataCase do
 
   # Tax Schemas
   def tax_category_fields, do: TaxCategory.fields()
+  def tax_rate_fields, do: TaxRate.fields()
 
   # Zone Schemas
   def country_fields, do: Country.fields()
@@ -441,6 +443,17 @@ defmodule InventoryRoom.DataCase do
       "alt_text" => 0,
       "url" => %{},
       "variant_id" => %{}
+    }
+  end
+
+  def bad_tax_rate_params do
+    %{
+      "amount" => %{},
+      "zone_id" => "not_an_integer",
+      "included_in_price" => 0,
+      "name" => %{},
+      "show_rate_in_label" => "not_an_integer",
+      "deleted_at" => 0
     }
   end
 

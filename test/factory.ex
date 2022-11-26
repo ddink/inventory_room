@@ -40,7 +40,8 @@ defmodule InventoryRoom.Factory do
   }
 
   alias InventoryRoom.Settings.Taxes.{
-    TaxCategory
+    TaxCategory,
+    TaxRate
   }
 
   alias InventoryRoom.Settings.Zones.{
@@ -333,6 +334,24 @@ defmodule InventoryRoom.Factory do
       description: Faker.Lorem.paragraph(),
       is_default: Enum.random([true, false]),
       tax_code: tax_code
+    }
+  end
+
+  def tax_rate_factory do
+    amount = FakerElixir.Number.decimal(1,2)
+             |> Decimal.new
+             |> Decimal.to_float
+    zone = insert(:zone)
+    deleted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                 |> NaiveDateTime.to_string
+
+    %TaxRate{
+      amount: amount,
+      zone_id: zone.id,
+      included_in_price: Enum.random([true, false]),
+      name: "VAT Sales Tax",
+      show_rate_in_label: Enum.random([true, false]),
+      deleted_at: deleted_at
     }
   end
 

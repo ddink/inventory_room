@@ -15,6 +15,7 @@
 
 defmodule InventoryRoom.Settings.Taxes.TaxRate do
   use Ecto.Schema
+  import Ecto.Changeset
   alias InventoryRoom.Settings.Zones.Zone
   alias InventoryRoom.Settings.Taxes.TaxCategory
   
@@ -27,5 +28,23 @@ defmodule InventoryRoom.Settings.Taxes.TaxRate do
     field :show_rate_in_label,  :boolean
     field :deleted_at, :naive_datetime
     timestamps()
+  end
+
+  def fields do
+		__MODULE__.__schema__(:fields) -- [:id, :inserted_at, :updated_at]
+	end
+
+	def changeset(params) when is_map(params), do: changeset(%__MODULE__{}, params)
+	def changeset(%__MODULE__{} = rate, params) do
+		rate |> cast(params, fields())
+	end
+
+	def create_changeset(params), do: create_changeset(%__MODULE__{}, params)
+	def create_changeset(%__MODULE__{} = rate, params) do
+		rate |> changeset(params)
+	end
+
+	def delete_changeset(%__MODULE__{} = rate) do
+    rate |> changeset(%{})
   end
 end
