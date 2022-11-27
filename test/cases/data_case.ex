@@ -3,6 +3,8 @@ defmodule InventoryRoom.DataCase do
 	alias StoreRepo.Repo
 	alias Ecto.Changeset
 
+  alias InventoryRoom.Orders.Payment
+
 	alias InventoryRoom.Products.{
 		OptionType,
     OptionValue,
@@ -105,6 +107,9 @@ defmodule InventoryRoom.DataCase do
              "The validation type, #{meta[:validation]}, is incorrect."
     end
   end
+
+  # Orders Schemas
+  def payment_fields, do: Payment.fields()
 
   # Products Schemas
 	def option_type_fields, do: OptionType.fields()
@@ -511,6 +516,20 @@ defmodule InventoryRoom.DataCase do
       "name" => %{},
       "show_rate_in_label" => "not_an_integer",
       "deleted_at" => 0
+    }
+  end
+
+  def bad_payment_params do
+    %{
+      "amount" => %{},
+      "state" => 0,
+      "response_code" => NaiveDateTime.utc_now(),
+      "avs_response" => %{},
+      "number" => 0,
+      "cvv_response_code" => NaiveDateTime.utc_now(),
+      "cvv_response_message" => 0,
+      "order_id" => %{},
+      "payment_method_id" => NaiveDateTime.utc_now()
     }
   end
 

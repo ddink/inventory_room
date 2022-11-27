@@ -19,6 +19,7 @@
 
 defmodule InventoryRoom.Orders.Payment do
   use Ecto.Schema
+  import Ecto.Changeset
   alias InventoryRoom.Settings.PaymentMethod
   alias ShoppingCart.Orders.Order
 
@@ -31,7 +32,31 @@ defmodule InventoryRoom.Orders.Payment do
     field :cvv_response_code, :string
     field :cvv_response_message, :string
     belongs_to :order, Order
-    belongs_to :payment_methods, PaymentMethod
+    belongs_to :payment_method, PaymentMethod
     timestamps()
+  end
+
+  def fields do
+		__MODULE__.__schema__(:fields) -- [:id, :inserted_at, :updated_at]
+	end
+
+  def required_fields do
+    [:amount]
+  end
+
+	def changeset(params) when is_map(params), do: changeset(%__MODULE__{}, params)
+	def changeset(%__MODULE__{} = payment, params) do
+		payment |> cast(params, fields())
+	end
+
+	def create_changeset(params), do: create_changeset(%__MODULE__{}, params)
+	def create_changeset(%__MODULE__{} = payment, params) do
+		payment 
+    |> changeset(params)
+    |> validate_required(required_fields())
+	end
+
+	def delete_changeset(%__MODULE__{} = payment) do
+    payment |> changeset(%{})
   end
 end

@@ -1,6 +1,8 @@
 defmodule InventoryRoom.Factory do
   use ExMachina.Ecto, repo: StoreRepo.Repo
 
+  alias InventoryRoom.Orders.Payment
+
   alias InventoryRoom.Products.{
     OptionType,
     OptionValue,
@@ -597,6 +599,26 @@ defmodule InventoryRoom.Factory do
       fulfillable: Enum.random([true, false]),
       code: code,
       check_stock_on_transfer: Enum.random([true, false])
+    }
+  end
+
+  def payment_factory do
+    amount = FakerElixir.Number.decimal(2,2)
+             |> Decimal.new
+             |> Decimal.to_float
+    order = ShoppingCart.Factory.insert(:order)
+    payment_method = insert(:payment_method)
+    
+    %Payment{
+      amount: amount,
+      state: "paid",
+      response_code: "200",
+      avs_response: "cvv success",
+      number: "1",
+      cvv_response_code: "200",
+      cvv_response_message: "payment successfully made",
+      order_id: order.id,
+      payment_method_id: payment_method.id
     }
   end
 end
