@@ -3,6 +3,10 @@ defmodule InventoryRoom.Factory do
 
   alias InventoryRoom.Inventory.StockItem
 
+  alias InventoryRoom.Joins.{
+    ProductOptionType
+  }
+
   alias InventoryRoom.Orders.Payment
 
   alias InventoryRoom.Products.{
@@ -694,6 +698,16 @@ defmodule InventoryRoom.Factory do
       deleted_at: deleted_at,
       stock_location_id: stock_location.id,
       variant_id: variant.id
+    }
+  end
+
+  def product_option_type_factory do
+    product = insert(:product)
+    option_type = insert(:option_type)
+
+    %ProductOptionType{
+      product_id: product.id,
+      option_type_id: option_type.id
     }
   end
 end

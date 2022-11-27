@@ -5,6 +5,10 @@ defmodule InventoryRoom.DataCase do
 
   alias InventoryRoom.Inventory.StockItem
 
+  alias InventoryRoom.Joins.{
+    ProductOptionType
+  }
+
   alias InventoryRoom.Orders.Payment
 
 	alias InventoryRoom.Products.{
@@ -116,6 +120,9 @@ defmodule InventoryRoom.DataCase do
 
   # Inventory Schemas
   def stock_item_fields, do: StockItem.fields()
+
+  # Joins Schemas
+  def product_option_type_fields, do: ProductOptionType.fields()
 
   # Orders Schemas
   def payment_fields, do: Payment.fields()
@@ -589,6 +596,13 @@ defmodule InventoryRoom.DataCase do
       "deleted_at" => "now",
       "stock_location_id" => %{},
       "variant_id" => []
+    }
+  end
+
+  def bad_product_option_type_params do
+    %{
+      "product_id" => [],
+      "option_type_id" => %{}
     }
   end
 
