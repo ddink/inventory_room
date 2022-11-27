@@ -25,6 +25,7 @@ defmodule InventoryRoom.Factory do
   alias InventoryRoom.Settings.RefundsAndReturns.{
     Adjustment,
     AdjustmentReason,
+    CustomerReturn,
     RefundReason,
     ReimbursementType,
     ReturnAuthorization,
@@ -632,6 +633,15 @@ defmodule InventoryRoom.Factory do
       state: "returned",
       memo: Faker.Lorem.paragraph(),
       order_id: order.id,
+      stock_location_id: stock_location.id
+    }
+  end
+
+  def customer_return_factory do
+    stock_location = insert(:stock_location)
+    
+    %CustomerReturn{
+      number: to_string(Enum.random(200..1000)),
       stock_location_id: stock_location.id
     }
   end

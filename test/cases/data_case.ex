@@ -27,6 +27,7 @@ defmodule InventoryRoom.DataCase do
   alias InventoryRoom.Settings.RefundsAndReturns.{
     Adjustment,
     AdjustmentReason,
+    CustomerReturn,
     RefundReason,
     ReimbursementType,
     ReturnAuthorization,
@@ -133,6 +134,7 @@ defmodule InventoryRoom.DataCase do
   # Refunds and Reasons Schemas
   def adjustment_fields, do: Adjustment.fields()
   def adjustment_reason_fields, do: AdjustmentReason.fields()
+  def customer_return_fields, do: CustomerReturn.fields()
   def refund_reason_fields, do: RefundReason.fields()
   def reimbursement_type_fields, do: ReimbursementType.fields()
   def return_authorization_fields, do: ReturnAuthorization.fields()
@@ -271,6 +273,13 @@ defmodule InventoryRoom.DataCase do
       "order_id" => %{},
       "promotion_code_id" => %{},
       "adjustment_reason_id" => %{}
+    }
+  end
+
+  def bad_customer_return_params do
+    %{
+      "number" => %{},
+      "stock_location_id" => %{}
     }
   end
 
