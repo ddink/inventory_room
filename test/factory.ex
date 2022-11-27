@@ -110,7 +110,6 @@ defmodule InventoryRoom.Factory do
   end
 
   def price_factory do
-    # variant = insert(:variant)
     currency_code = ["USD", "EUR", "GBP"] |> Enum.random()
     country_iso = Countries.filter_by(:currency_code, currency_code) 
                   |> Enum.random() 
@@ -127,7 +126,6 @@ defmodule InventoryRoom.Factory do
       deleted_at: deleted_at,
       is_default: false,
       country_iso: country_iso,
-      # variant_id: variant.id
       variant_id: Enum.random(1..10)
     }
   end
@@ -194,7 +192,6 @@ defmodule InventoryRoom.Factory do
     type = ["one-time", "weekly"] |> Enum.random()
     match_policy = ["any", "all"] |> Enum.random()
     promotion_category = insert(:promotion_category)
-    # code = insert(:promotion_code)
     
     %Promotion{
       description: Faker.Lorem.paragraph(),
@@ -427,13 +424,17 @@ defmodule InventoryRoom.Factory do
   end
 
   def country_factory do
-    country = Countries.all() |> Enum.random() 
+    country = Countries.filter_by(:continent, "North America") |> Enum.random() 
     country_name = country |> Map.get(:name)
     country_iso = country |> Map.get(:alpha2)
     country_iso3 = country |> Map.get(:alpha3)
-    numcode = country 
-              |> Map.get(:number) 
-              |> String.to_integer
+    numcode = if is_integer(Map.get(country, :number)) do
+                Map.get(country, :number)
+              else
+                country
+                |> Map.get(:number) 
+                |> String.to_integer
+              end
 
     %Country{
       iso_name: country_name,
@@ -450,11 +451,21 @@ defmodule InventoryRoom.Factory do
     country = country_factory          
               |> Map.get(:iso)
               |> Countries.get()
-    state = Countries.Subdivisions.all(country) |> Enum.random
+    state = case Countries.Subdivisions.all(country) do
+                        [] ->
+                          Countries.get("US") |> Countries.Subdivisions.all |> Enum.random
+                        countries ->
+                          countries |> Enum.random
+                      end
     state_name = state |> Map.get(:name)
-    state_abbr = state 
-                 |> Map.get(:id)
-                 |> to_string
+    state_id = state
+               |> Map.get(:id)
+               |> to_string
+    state_abbr = if Integer.parse(state_id) == :error do
+                   state_id
+                 else
+                   state_name
+                 end
     
     %State{
       name: state_name,
