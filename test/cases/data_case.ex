@@ -7,7 +7,8 @@ defmodule InventoryRoom.DataCase do
 
   alias InventoryRoom.Joins.{
     ProductOptionType,
-    ProductProperty
+    ProductProperty,
+    ProductTaxon
   }
 
   alias InventoryRoom.Orders.Payment
@@ -125,6 +126,7 @@ defmodule InventoryRoom.DataCase do
   # Joins Schemas
   def product_option_type_fields, do: ProductOptionType.fields()
   def product_property_fields, do: ProductProperty.fields()
+  def product_taxon_fields, do: ProductTaxon.fields()
 
   # Orders Schemas
   def payment_fields, do: Payment.fields()
@@ -614,6 +616,13 @@ defmodule InventoryRoom.DataCase do
       "property_id" => %{}
     }
   end
+
+  def bad_product_taxon_params do
+    %{
+      "product_id" => [],
+      "taxon_id" => %{}
+    }
+  end 
 
 	def atom_map(string_key_map) do
     for {key, val} <- string_key_map, into: %{}, do: {String.to_atom(key), val}

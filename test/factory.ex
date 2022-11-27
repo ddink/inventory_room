@@ -5,7 +5,8 @@ defmodule InventoryRoom.Factory do
 
   alias InventoryRoom.Joins.{
     ProductOptionType,
-    ProductProperty
+    ProductProperty,
+    ProductTaxon
   }
 
   alias InventoryRoom.Orders.Payment
@@ -719,6 +720,16 @@ defmodule InventoryRoom.Factory do
     %ProductProperty{
       product_id: product.id,
       property_id: property.id
+    }
+  end
+
+  def product_taxon_factory do
+    product = insert(:product)
+    taxon = insert(:taxon)
+
+    %ProductTaxon{
+      product_id: product.id,
+      taxon_id: taxon.id
     }
   end
 end
