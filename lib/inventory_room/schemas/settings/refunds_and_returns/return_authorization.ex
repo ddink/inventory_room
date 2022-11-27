@@ -12,6 +12,7 @@
 
 defmodule InventoryRoom.Settings.RefundsAndReturns.ReturnAuthorization do
   use Ecto.Schema
+  import Ecto.Changeset
   alias InventoryRoom.Settings.Shipping.StockLocation
   alias ShoppingCart.Orders.Order
 
@@ -22,5 +23,23 @@ defmodule InventoryRoom.Settings.RefundsAndReturns.ReturnAuthorization do
     belongs_to :order, Order
     belongs_to :stock_location, StockLocation
     timestamps()
+  end
+
+  def fields do
+		__MODULE__.__schema__(:fields) -- [:id, :inserted_at, :updated_at]
+	end
+
+	def changeset(params) when is_map(params), do: changeset(%__MODULE__{}, params)
+	def changeset(%__MODULE__{} = authorization, params) do
+		authorization |> cast(params, fields())
+	end
+
+	def create_changeset(params), do: create_changeset(%__MODULE__{}, params)
+	def create_changeset(%__MODULE__{} = authorization, params) do
+		authorization |> changeset(params)
+	end
+
+	def delete_changeset(%__MODULE__{} = authorization) do
+    authorization |> changeset(%{})
   end
 end

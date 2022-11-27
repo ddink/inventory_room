@@ -29,6 +29,7 @@ defmodule InventoryRoom.DataCase do
     AdjustmentReason,
     RefundReason,
     ReimbursementType,
+    ReturnAuthorization,
     ReturnReason
   }
 
@@ -134,6 +135,7 @@ defmodule InventoryRoom.DataCase do
   def adjustment_reason_fields, do: AdjustmentReason.fields()
   def refund_reason_fields, do: RefundReason.fields()
   def reimbursement_type_fields, do: ReimbursementType.fields()
+  def return_authorization_fields, do: ReturnAuthorization.fields()
   def return_reason_fields, do: ReturnReason.fields()
 
   # Shipping Schemas
@@ -530,6 +532,16 @@ defmodule InventoryRoom.DataCase do
       "cvv_response_message" => 0,
       "order_id" => %{},
       "payment_method_id" => NaiveDateTime.utc_now()
+    }
+  end
+
+  def bad_return_authorization_params do
+    %{
+      "number" => %{},
+      "state" => 0,
+      "memo" => NaiveDateTime.utc_now(),
+      "order_id" => %{},
+      "stock_location_id" => %{}
     }
   end
 

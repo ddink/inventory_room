@@ -27,6 +27,7 @@ defmodule InventoryRoom.Factory do
     AdjustmentReason,
     RefundReason,
     ReimbursementType,
+    ReturnAuthorization,
     ReturnReason
   }
 
@@ -619,6 +620,19 @@ defmodule InventoryRoom.Factory do
       cvv_response_message: "payment successfully made",
       order_id: order.id,
       payment_method_id: payment_method.id
+    }
+  end
+
+  def return_authorization_factory do
+    order = ShoppingCart.Factory.insert(:order)
+    stock_location = insert(:stock_location)
+    
+    %ReturnAuthorization{
+      number: to_string(Enum.random(200..1000)),
+      state: "returned",
+      memo: Faker.Lorem.paragraph(),
+      order_id: order.id,
+      stock_location_id: stock_location.id
     }
   end
 end
