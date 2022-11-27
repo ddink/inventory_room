@@ -9,7 +9,8 @@ defmodule InventoryRoom.DataCase do
     ProductOptionType,
     ProductProperty,
     ProductTaxon,
-    ShippingMethodCategory
+    ShippingMethodCategory,
+    ShippingMethodStockLocation
   }
 
   alias InventoryRoom.Orders.Payment
@@ -129,6 +130,7 @@ defmodule InventoryRoom.DataCase do
   def product_property_fields, do: ProductProperty.fields()
   def product_taxon_fields, do: ProductTaxon.fields()
   def shipping_method_category_fields, do: ShippingMethodCategory.fields()
+  def shipping_method_stock_location_fields, do: ShippingMethodStockLocation.fields()
 
   # Orders Schemas
   def payment_fields, do: Payment.fields()
@@ -630,6 +632,13 @@ defmodule InventoryRoom.DataCase do
     %{
       "shipping_method_id" => [],
       "shipping_category_id" => %{}
+    }
+  end
+
+  def bad_shipping_method_stock_location_params do
+    %{
+      "shipping_method_id" => [],
+      "stock_location_id" => %{}
     }
   end
 
