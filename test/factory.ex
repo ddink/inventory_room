@@ -11,7 +11,8 @@ defmodule InventoryRoom.Factory do
     ShippingMethodStockLocation,
     ShippingMethodZone,
     StorePaymentMethod,
-    VariantOptionValue
+    VariantOptionValue,
+    ZoneMember
   }
 
   alias InventoryRoom.Orders.Payment
@@ -785,6 +786,18 @@ defmodule InventoryRoom.Factory do
     %VariantOptionValue{
       variant_id: variant.id,
       option_value_id: option_value.id
+    }
+  end
+
+  def zone_member_factory do
+    zone = insert(:zone)
+    state = insert(:state)
+    country = insert(:country)
+
+    %ZoneMember{
+      zone_id: zone.id,
+      state_id: state.id,
+      country_id: country.id
     }
   end
 end
