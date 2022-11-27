@@ -12,7 +12,8 @@ defmodule InventoryRoom.DataCase do
     ShippingMethodCategory,
     ShippingMethodStockLocation,
     ShippingMethodZone,
-    StorePaymentMethod
+    StorePaymentMethod,
+    VariantOptionValue
   }
 
   alias InventoryRoom.Orders.Payment
@@ -135,6 +136,7 @@ defmodule InventoryRoom.DataCase do
   def shipping_method_stock_location_fields, do: ShippingMethodStockLocation.fields()
   def shipping_method_zone_fields, do: ShippingMethodZone.fields()
   def store_payment_method_fields, do: StorePaymentMethod.fields()
+  def variant_option_value_fields, do: VariantOptionValue.fields()
 
   # Orders Schemas
   def payment_fields, do: Payment.fields()
@@ -657,6 +659,13 @@ defmodule InventoryRoom.DataCase do
     %{
       "store_id" => [],
       "payment_method_id" => %{}
+    }
+  end
+
+  def bad_variant_option_value_params do
+    %{
+      "variant_id" => [],
+      "option_value_id" => %{}
     }
   end
 

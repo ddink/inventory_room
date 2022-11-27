@@ -10,7 +10,8 @@ defmodule InventoryRoom.Factory do
     ShippingMethodCategory,
     ShippingMethodStockLocation,
     ShippingMethodZone,
-    StorePaymentMethod
+    StorePaymentMethod,
+    VariantOptionValue
   }
 
   alias InventoryRoom.Orders.Payment
@@ -774,6 +775,16 @@ defmodule InventoryRoom.Factory do
     %StorePaymentMethod{
       store_id: store.id,
       payment_method_id: payment_method.id
+    }
+  end
+
+  def variant_option_value_factory do
+    variant = insert(:variant)
+    option_value = insert(:option_value)
+
+    %VariantOptionValue{
+      variant_id: variant.id,
+      option_value_id: option_value.id
     }
   end
 end
