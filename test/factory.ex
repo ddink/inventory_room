@@ -26,6 +26,7 @@ defmodule InventoryRoom.Factory do
     Adjustment,
     AdjustmentReason,
     CustomerReturn,
+    Refund,
     RefundReason,
     Reimbursement,
     ReimbursementType,
@@ -660,6 +661,22 @@ defmodule InventoryRoom.Factory do
       total: total,
       customer_return_id: customer_return.id,
       order_id: order.id
+    }
+  end
+
+  def refund_factory do
+    amount = FakerElixir.Number.decimal(2,2)
+             |> Decimal.new
+             |> Decimal.to_float
+    payment = insert(:payment)
+    refund_reason = insert(:refund_reason)
+    reimbursement = insert(:reimbursement)
+    
+    %Refund{
+      amount: amount,
+      payment_id: payment.id,
+      refund_reason_id: refund_reason.id,
+      reimbursement_id: reimbursement.id
     }
   end
 end
