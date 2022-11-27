@@ -27,6 +27,7 @@ defmodule InventoryRoom.Factory do
     AdjustmentReason,
     CustomerReturn,
     RefundReason,
+    Reimbursement,
     ReimbursementType,
     ReturnAuthorization,
     ReturnReason
@@ -643,6 +644,22 @@ defmodule InventoryRoom.Factory do
     %CustomerReturn{
       number: to_string(Enum.random(200..1000)),
       stock_location_id: stock_location.id
+    }
+  end
+
+  def reimbursement_factory do
+    customer_return = insert(:customer_return)
+    order = ShoppingCart.Factory.insert(:order)
+    total = FakerElixir.Number.decimal(2,2)
+             |> Decimal.new
+             |> Decimal.to_float
+
+    %Reimbursement{
+      number: to_string(Enum.random(200..1000)),
+      reimbursement_status: "reimbursed",
+      total: total,
+      customer_return_id: customer_return.id,
+      order_id: order.id
     }
   end
 end

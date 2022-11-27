@@ -29,6 +29,7 @@ defmodule InventoryRoom.DataCase do
     AdjustmentReason,
     CustomerReturn,
     RefundReason,
+    Reimbursement,
     ReimbursementType,
     ReturnAuthorization,
     ReturnReason
@@ -136,6 +137,7 @@ defmodule InventoryRoom.DataCase do
   def adjustment_reason_fields, do: AdjustmentReason.fields()
   def customer_return_fields, do: CustomerReturn.fields()
   def refund_reason_fields, do: RefundReason.fields()
+  def reimbursement_fields, do: Reimbursement.fields()
   def reimbursement_type_fields, do: ReimbursementType.fields()
   def return_authorization_fields, do: ReturnAuthorization.fields()
   def return_reason_fields, do: ReturnReason.fields()
@@ -551,6 +553,16 @@ defmodule InventoryRoom.DataCase do
       "memo" => NaiveDateTime.utc_now(),
       "order_id" => %{},
       "stock_location_id" => %{}
+    }
+  end
+
+  def bad_reimbursement_params do
+    %{
+      "number" => %{},
+      "total" => NaiveDateTime.utc_now(),
+      "reimbursement_status" => 0,
+      "customer_return_id" => %{},
+      "order_id" => NaiveDateTime.utc_now()
     }
   end
 
