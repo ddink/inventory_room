@@ -31,7 +31,8 @@ defmodule InventoryRoom.DataCase do
   }
 
   alias InventoryRoom.Settings.Shipping.{
-    ShippingCategory
+    ShippingCategory,
+    StockLocation
   }
 
   alias InventoryRoom.Settings.StoreCredits.{
@@ -130,6 +131,7 @@ defmodule InventoryRoom.DataCase do
 
   # Shipping Schemas
   def shipping_category_fields, do: ShippingCategory.fields()
+  def stock_location_fields, do: StockLocation.fields()
 
   # Store Credit Schemas
   def credit_fields, do: Credit.fields()
@@ -290,6 +292,27 @@ defmodule InventoryRoom.DataCase do
   def bad_shipping_category_params do
     %{
       "name" => %{}
+    }
+  end
+
+  def bad_stock_location_params do
+    %{
+      "name" => %{},
+      "default" => 0,
+      "address1" => %{},
+      "address2" => 0,
+      "city" => %{},
+      "zipcode" => 0,
+      "phone" => %{},
+      "active" => 0,
+      "backorderable_default" => %{},
+      "propagate_all_variants" => 0,
+      "internal_name" => %{},
+      "restock_inventory" => %{},
+      "fulfillable" => 0,
+      "code" => %{},
+      "check_stock_on_transfer" => 0,
+      "position" => %{}
     }
   end
 

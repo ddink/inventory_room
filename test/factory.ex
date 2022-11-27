@@ -29,7 +29,8 @@ defmodule InventoryRoom.Factory do
   }
 
   alias InventoryRoom.Settings.Shipping.{
-    ShippingCategory
+    ShippingCategory,
+    StockLocation
   }
 
   alias InventoryRoom.Settings.StoreCredits.{
@@ -523,6 +524,30 @@ defmodule InventoryRoom.Factory do
       alt_text: Faker.Lorem.sentence(5, ""),
       url: "#{product.slug}/images/#{image_id}",
       file: "#{product.name}_#{image_id}.jpg"
+    }
+  end
+
+  def stock_location_factory do
+    location_id = Enum.random(1..10)
+    code = Faker.Lorem.characters(4) |> to_string
+    
+    %StockLocation{
+      name: "Stock Location #{location_id}",
+      default: Enum.random([true, false]),
+      address1: Faker.Address.street_address(),
+      address2: Faker.Address.secondary_address(),
+      city: Faker.Address.city(),
+      zipcode: Faker.Address.zip(),
+      phone: Faker.Phone.EnUs.phone(),
+      active: Enum.random([true, false]),
+      backorderable_default: Enum.random([true, false]),
+      propagate_all_variants: Enum.random([true, false]),
+      internal_name: "Warehouse #{location_id}",
+      position: Enum.random(1..9),
+      restock_inventory: Enum.random([true, false]),
+      fulfillable: Enum.random([true, false]),
+      code: code,
+      check_stock_on_transfer: Enum.random([true, false])
     }
   end
 end
