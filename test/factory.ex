@@ -6,7 +6,8 @@ defmodule InventoryRoom.Factory do
   alias InventoryRoom.Joins.{
     ProductOptionType,
     ProductProperty,
-    ProductTaxon
+    ProductTaxon,
+    ShippingMethodCategory
   }
 
   alias InventoryRoom.Orders.Payment
@@ -730,6 +731,16 @@ defmodule InventoryRoom.Factory do
     %ProductTaxon{
       product_id: product.id,
       taxon_id: taxon.id
+    }
+  end
+
+  def shipping_method_category_factory do
+    shipping_method = insert(:shipping_method)
+    shipping_category = insert(:shipping_category)
+
+    %ShippingMethodCategory{
+      shipping_method_id: shipping_method.id,
+      shipping_category_id: shipping_category.id
     }
   end
 end
