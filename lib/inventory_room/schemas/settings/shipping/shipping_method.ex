@@ -16,6 +16,7 @@
 
 defmodule InventoryRoom.Settings.Shipping.ShippingMethod do
   use Ecto.Schema
+  import Ecto.Changeset
   alias InventoryRoom.Joins.{
     ShippingMethodCategory,
     ShippingMethodStockLocation,
@@ -41,5 +42,23 @@ defmodule InventoryRoom.Settings.Shipping.ShippingMethod do
     has_many :shipping_method_zones, ShippingMethodZone
     has_many :zones, through: [:shipping_method_zones, :zone]
     timestamps()
+  end
+
+  def fields do
+		__MODULE__.__schema__(:fields) -- [:id, :inserted_at, :updated_at]
+	end
+
+	def changeset(params) when is_map(params), do: changeset(%__MODULE__{}, params)
+	def changeset(%__MODULE__{} = method, params) do
+		method |> cast(params, fields())
+	end
+
+	def create_changeset(params), do: create_changeset(%__MODULE__{}, params)
+	def create_changeset(%__MODULE__{} = method, params) do
+		method |> changeset(params)
+	end
+
+	def delete_changeset(%__MODULE__{} = method) do
+    method |> changeset(%{})
   end
 end

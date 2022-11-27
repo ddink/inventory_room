@@ -30,6 +30,7 @@ defmodule InventoryRoom.Factory do
 
   alias InventoryRoom.Settings.Shipping.{
     ShippingCategory,
+    ShippingMethod,
     StockLocation
   }
 
@@ -269,6 +270,27 @@ defmodule InventoryRoom.Factory do
     }
   end
 
+  def shipping_method_factory do
+    shipping_method_id = Enum.random(1..10)
+    deleted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                 |> NaiveDateTime.to_string
+    code = Faker.Lorem.characters(8) |> to_string
+    tax_category = insert(:tax_category)
+
+    %ShippingMethod{
+      name: "Shipping Method #{shipping_method_id}",
+      display_on: "all",
+      deleted_at: deleted_at,
+      tracking_url: "/shipping_method/#{shipping_method_id}",
+      internal_name: "Ground Shipping #{shipping_method_id}",
+      code: code,
+      available_to_all: Enum.random([true, false]),
+      carrier: "Fedex",
+      service_level: "Ground",
+      tax_category_id: tax_category.id
+    }
+  end
+
   def credit_category_factory do
     category = ["store credit", "company credit", "brand credit"] 
                |> Enum.random
@@ -450,7 +472,6 @@ defmodule InventoryRoom.Factory do
     available_on = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
                    |> NaiveDateTime.to_string
     discontinue_on = NaiveDateTime.utc_now |> NaiveDateTime.to_string
-    code = Faker.Lorem.characters(4) |> to_string
     master_sku_name = name
                  |> String.split
                  |> List.first

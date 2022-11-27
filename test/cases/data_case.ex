@@ -32,6 +32,7 @@ defmodule InventoryRoom.DataCase do
 
   alias InventoryRoom.Settings.Shipping.{
     ShippingCategory,
+    ShippingMethod,
     StockLocation
   }
 
@@ -131,6 +132,7 @@ defmodule InventoryRoom.DataCase do
 
   # Shipping Schemas
   def shipping_category_fields, do: ShippingCategory.fields()
+  def shipping_method_fields, do: ShippingMethod.fields()
   def stock_location_fields, do: StockLocation.fields()
 
   # Store Credit Schemas
@@ -292,6 +294,21 @@ defmodule InventoryRoom.DataCase do
   def bad_shipping_category_params do
     %{
       "name" => %{}
+    }
+  end
+
+  def bad_shipping_method_params do
+    %{
+      "name" => %{},
+      "display_on" => 0,
+      "deleted_at" => 0.0,
+      "tracking_url" => NaiveDateTime.utc_now(),
+      "internal_name" => %{},
+      "code" => 0,
+      "available_to_all" => "not_false",
+      "carrier" => NaiveDateTime.utc_now(),
+      "service_level" => 0,
+      "tax_category_id" => %{}
     }
   end
 
