@@ -9,7 +9,8 @@ defmodule InventoryRoom.Factory do
     ProductTaxon,
     ShippingMethodCategory,
     ShippingMethodStockLocation,
-    ShippingMethodZone
+    ShippingMethodZone,
+    StorePaymentMethod
   }
 
   alias InventoryRoom.Orders.Payment
@@ -763,6 +764,16 @@ defmodule InventoryRoom.Factory do
     %ShippingMethodZone{
       shipping_method_id: shipping_method.id,
       zone_id: zone.id
+    }
+  end
+
+  def store_payment_method_factory do
+    store = insert(:store)
+    payment_method = insert(:payment_method)
+
+    %StorePaymentMethod{
+      store_id: store.id,
+      payment_method_id: payment_method.id
     }
   end
 end
