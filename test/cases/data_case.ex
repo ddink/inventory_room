@@ -6,7 +6,8 @@ defmodule InventoryRoom.DataCase do
   alias InventoryRoom.Inventory.StockItem
 
   alias InventoryRoom.Joins.{
-    ProductOptionType
+    ProductOptionType,
+    ProductProperty
   }
 
   alias InventoryRoom.Orders.Payment
@@ -123,6 +124,7 @@ defmodule InventoryRoom.DataCase do
 
   # Joins Schemas
   def product_option_type_fields, do: ProductOptionType.fields()
+  def product_property_fields, do: ProductProperty.fields()
 
   # Orders Schemas
   def payment_fields, do: Payment.fields()
@@ -603,6 +605,13 @@ defmodule InventoryRoom.DataCase do
     %{
       "product_id" => [],
       "option_type_id" => %{}
+    }
+  end
+
+  def bad_product_property_params do
+    %{
+      "product_id" => [],
+      "property_id" => %{}
     }
   end
 
