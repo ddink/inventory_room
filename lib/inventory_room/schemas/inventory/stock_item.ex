@@ -17,6 +17,7 @@
 
 defmodule InventoryRoom.Inventory.StockItem do
   use Ecto.Schema
+  import Ecto.Changeset
   alias InventoryRoom.Settings.Shipping.StockLocation
   alias InventoryRoom.Products.Variant
 
@@ -27,5 +28,29 @@ defmodule InventoryRoom.Inventory.StockItem do
     field(:backorderable, :boolean)
     field(:deleted_at, :naive_datetime)
     timestamps()
+  end
+
+  def fields do
+		__MODULE__.__schema__(:fields) -- [:id, :inserted_at, :updated_at]
+	end
+
+  def required_fields do
+    [:count_on_hand]
+  end
+
+	def changeset(params) when is_map(params), do: changeset(%__MODULE__{}, params)
+	def changeset(%__MODULE__{} = item, params) do
+		item |> cast(params, fields())
+	end
+
+	def create_changeset(params), do: create_changeset(%__MODULE__{}, params)
+	def create_changeset(%__MODULE__{} = item, params) do
+		item 
+    |> changeset(params)
+    |> validate_required(required_fields())
+	end
+
+	def delete_changeset(%__MODULE__{} = item) do
+    item |> changeset(%{})
   end
 end

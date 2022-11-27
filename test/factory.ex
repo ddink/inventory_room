@@ -1,6 +1,8 @@
 defmodule InventoryRoom.Factory do
   use ExMachina.Ecto, repo: StoreRepo.Repo
 
+  alias InventoryRoom.Inventory.StockItem
+
   alias InventoryRoom.Orders.Payment
 
   alias InventoryRoom.Products.{
@@ -677,6 +679,21 @@ defmodule InventoryRoom.Factory do
       payment_id: payment.id,
       refund_reason_id: refund_reason.id,
       reimbursement_id: reimbursement.id
+    }
+  end
+
+  def stock_item_factory do
+    deleted_at = NaiveDateTime.utc_now()
+                 |> NaiveDateTime.to_string
+    stock_location = insert(:stock_location)
+    variant = insert(:variant)
+    
+    %StockItem{
+      count_on_hand: Enum.random(10..30),
+      backorderable: Enum.random([true, false]),
+      deleted_at: deleted_at,
+      stock_location_id: stock_location.id,
+      variant_id: variant.id
     }
   end
 end

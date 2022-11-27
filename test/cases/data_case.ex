@@ -3,6 +3,8 @@ defmodule InventoryRoom.DataCase do
 	alias StoreRepo.Repo
 	alias Ecto.Changeset
 
+  alias InventoryRoom.Inventory.StockItem
+
   alias InventoryRoom.Orders.Payment
 
 	alias InventoryRoom.Products.{
@@ -111,6 +113,9 @@ defmodule InventoryRoom.DataCase do
              "The validation type, #{meta[:validation]}, is incorrect."
     end
   end
+
+  # Inventory Schemas
+  def stock_item_fields, do: StockItem.fields()
 
   # Orders Schemas
   def payment_fields, do: Payment.fields()
@@ -574,6 +579,16 @@ defmodule InventoryRoom.DataCase do
       "payment_id" => NaiveDateTime.utc_now(),
       "refund_reason_id" => %{},
       "reimbursement_id" => NaiveDateTime.utc_now()
+    }
+  end
+
+  def bad_stock_item_params do
+    %{
+      "count_on_hand" => %{},
+      "backorderable" => NaiveDateTime.utc_now(),
+      "deleted_at" => "now",
+      "stock_location_id" => %{},
+      "variant_id" => []
     }
   end
 
