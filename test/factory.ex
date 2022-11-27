@@ -29,6 +29,7 @@ defmodule InventoryRoom.Factory do
   }
 
   alias InventoryRoom.Settings.Shipping.{
+    Shipment,
     ShippingCategory,
     ShippingMethod,
     StockLocation
@@ -259,6 +260,33 @@ defmodule InventoryRoom.Factory do
       name: reason,
       active: Enum.random([true, false]),
       mutable: Enum.random([true, false]),
+    }
+  end
+
+  def shipment_factory do
+    cost = FakerElixir.Number.decimal(2,2)
+           |> Decimal.new
+           |> Decimal.to_float
+    adjustment_total = cost * 0.02
+    promo_total = cost * 0.15
+    additional_tax_total = (cost - promo_total) * 0.19
+    included_tax_total = (cost - promo_total) + additional_tax_total
+    tracking = Faker.Lorem.characters(10) |> to_string
+    shipped_at = NaiveDateTime.utc_now() |> NaiveDateTime.to_string()
+    order = ShoppingCart.Factory.insert(:order)
+    stock_location = insert(:stock_location)
+    
+    %Shipment{
+      tracking_number: tracking,
+      cost: cost,
+      shipped_at: shipped_at,
+      state: "shipped",
+      adjustment_total: adjustment_total,
+      additional_tax_total: additional_tax_total,
+      promo_total: promo_total,
+      included_tax_total: included_tax_total,
+      order_id: order.id,
+      stock_location_id: stock_location.id
     }
   end
 

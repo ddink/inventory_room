@@ -21,6 +21,7 @@
 
 defmodule InventoryRoom.Settings.Shipping.Shipment do
   use Ecto.Schema
+  import Ecto.Changeset
   alias ShoppingCart.Orders.Order
   alias InventoryRoom.Settings.Shipping.StockLocation
 
@@ -37,5 +38,33 @@ defmodule InventoryRoom.Settings.Shipping.Shipment do
     belongs_to :order, Order
     belongs_to :stock_location, StockLocation
     timestamps()
+  end
+
+  def fields do
+		__MODULE__.__schema__(:fields) -- [:id, :inserted_at, :updated_at]
+	end
+
+  def decimal_fields do
+    [
+      :cost, 
+      :adjustment_total, 
+      :additional_tax_total, 
+      :promo_total, 
+      :included_tax_total
+    ]
+  end
+
+	def changeset(params) when is_map(params), do: changeset(%__MODULE__{}, params)
+	def changeset(%__MODULE__{} = shipment, params) do
+		shipment |> cast(params, fields())
+	end
+
+	def create_changeset(params), do: create_changeset(%__MODULE__{}, params)
+	def create_changeset(%__MODULE__{} = shipment, params) do
+		shipment |> changeset(params)
+	end
+
+	def delete_changeset(%__MODULE__{} = shipment) do
+    shipment |> changeset(%{})
   end
 end
