@@ -723,80 +723,112 @@ defmodule InventoryRoom.Factory do
   def product_option_type_factory do
     product = insert(:product)
     option_type = insert(:option_type)
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                 |> NaiveDateTime.to_string
 
     %ProductOptionType{
       product_id: product.id,
-      option_type_id: option_type.id
+      option_type_id: option_type.id,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
   def product_property_factory do
     product = insert(:product)
     property = insert(:property)
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                 |> NaiveDateTime.to_string
 
     %ProductProperty{
       product_id: product.id,
-      property_id: property.id
+      property_id: property.id,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
   def product_taxon_factory do
     product = insert(:product)
     taxon = insert(:taxon)
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                 |> NaiveDateTime.to_string
 
     %ProductTaxon{
       product_id: product.id,
-      taxon_id: taxon.id
+      taxon_id: taxon.id,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
   def shipping_method_category_factory do
     shipping_method = insert(:shipping_method)
     shipping_category = insert(:shipping_category)
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                 |> NaiveDateTime.to_string
 
     %ShippingMethodCategory{
       shipping_method_id: shipping_method.id,
-      shipping_category_id: shipping_category.id
+      shipping_category_id: shipping_category.id,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
   def shipping_method_stock_location_factory do
     shipping_method = insert(:shipping_method)
     stock_location = insert(:stock_location)
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                 |> NaiveDateTime.to_string
 
     %ShippingMethodStockLocation{
       shipping_method_id: shipping_method.id,
-      stock_location_id: stock_location.id
+      stock_location_id: stock_location.id,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
   def shipping_method_zone_factory do
     shipping_method = insert(:shipping_method)
     zone = insert(:zone)
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                 |> NaiveDateTime.to_string
 
     %ShippingMethodZone{
       shipping_method_id: shipping_method.id,
-      zone_id: zone.id
+      zone_id: zone.id,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
   def store_payment_method_factory do
     store = insert(:store)
     payment_method = insert(:payment_method)
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                 |> NaiveDateTime.to_string
 
     %StorePaymentMethod{
       store_id: store.id,
-      payment_method_id: payment_method.id
+      payment_method_id: payment_method.id,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
   def variant_option_value_factory do
     variant = insert(:variant)
     option_value = insert(:option_value)
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                 |> NaiveDateTime.to_string
 
     %VariantOptionValue{
       variant_id: variant.id,
-      option_value_id: option_value.id
+      option_value_id: option_value.id,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
@@ -804,11 +836,15 @@ defmodule InventoryRoom.Factory do
     zone = insert(:zone)
     state = insert(:state)
     country = insert(:country)
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                 |> NaiveDateTime.to_string
 
     %ZoneMember{
       zone_id: zone.id,
       state_id: state.id,
-      country_id: country.id
+      country_id: country.id,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 end
