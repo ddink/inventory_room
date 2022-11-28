@@ -7,6 +7,7 @@ defmodule StoreRepo.Repo.Migrations.AddRefundsTable do
       add :payment_id, references(:payments)
       add :refund_reason_id, references(:refund_reasons)
       add :reimbursement_id, references(:reimbursements)
+      timestamps()
     end
   end
 end

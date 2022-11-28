@@ -12,6 +12,7 @@ defmodule StoreRepo.Repo.Migrations.AddShippingMethodsTable do
       add :available_to_all, :boolean, defualt: true
       add :carrier, :string
       add :service_level, :string
+      add :tax_category_id, references(:tax_categories)
       timestamps()
     end
   end

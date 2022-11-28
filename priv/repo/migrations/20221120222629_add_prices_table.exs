@@ -8,7 +8,7 @@ defmodule StoreRepo.Repo.Migrations.AddPricesTable do
       add :currency, :string
       add :deleted_at, :naive_datetime
       add :is_default, :boolean, default: true, null: false
-      add :country_iso, :string, size: 2
+      add :country_iso, :string
       timestamps()
     end
   end

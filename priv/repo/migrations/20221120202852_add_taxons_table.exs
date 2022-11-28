@@ -16,7 +16,7 @@ defmodule StoreRepo.Repo.Migrations.AddTaxonsTable do
       add :icon_updated_at, :naive_datetime
       add :description, :text
       add :meta_title, :string
-      add :meta_description, :string
+      add :meta_description, :text
       add :meta_keywords, :string
       timestamps()
     end

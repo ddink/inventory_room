@@ -3,12 +3,12 @@ defmodule StoreRepo.Repo.Migrations.AddProductImagesTable do
 
   def change do
     create table("product_images") do
-      add :file, :string
+      add :file, :string, null: false
       
-      add :product_id, references(:products, on_delete: :nothing)
+      add :product_id, references(:products, on_delete: :nothing), null: false
       
       add :alt_text, :text
-      add :url, :string
+      add :url, :string, null: false
       timestamps()
     end
   end

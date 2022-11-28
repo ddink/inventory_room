@@ -6,6 +6,7 @@ defmodule StoreRepo.Repo.Migrations.AddStatesTable do
       add :name, :string
       add :abbr, :string
       add :country_id, references(:countries, on_delete: :nothing)
+      timestamps()
     end
   end
 end

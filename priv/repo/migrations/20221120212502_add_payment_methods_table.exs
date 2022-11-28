@@ -7,7 +7,8 @@ defmodule StoreRepo.Repo.Migrations.AddPaymentMethodsTable do
       add :name, :string
       add :description, :text
       add :active, :boolean
-      add :display_on, :string
+      add :available_to_users, :boolean
+      add :available_to_admin, :boolean
       add :auto_capture, :boolean
       timestamps()
     end

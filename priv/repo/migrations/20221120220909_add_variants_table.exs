@@ -10,13 +10,12 @@ defmodule StoreRepo.Repo.Migrations.AddVariantsTable do
       add :depth, :decimal, precision: 8, scale: 2
       add :deleted_at, :naive_datetime
       add :is_master, :boolean, default: false
-
-      add :product_id, references(:products, on_delete: :nothing)
-
       add :cost_price, :decimal, precision: 10, scale: 2
       add :position, :integer
       add :cost_currency, :string
       add :track_inventory, :boolean, default: true
+      add :product_id, references(:products, on_delete: :nothing)
+      add :tax_category_id, references(:tax_categories)
       timestamps()
     end
   end

@@ -12,6 +12,9 @@ defmodule StoreRepo.Repo.Migrations.AddProductsTable do
       add :available_on, :naive_datetime
       add :discontinue_on, :naive_datetime
       add :promotionable, :boolean, default: true
+      add :master_sku, :string
+      add :shipping_category_id, references(:shipping_categories)
+      add :tax_category_id, references(:tax_categories)
       timestamps()
     end
   end

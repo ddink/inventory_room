@@ -6,6 +6,7 @@ defmodule StoreRepo.Repo.Migrations.AddZonesTable do
       add :name, :string
       add :description, :text
       add :zone_members_count, :integer, default: 0
+      add :default_tax, :boolean
       add :type, :string
       timestamps()
     end
