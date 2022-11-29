@@ -487,19 +487,21 @@ defmodule InventoryRoom.Factory do
   def tax_category_factory do
     category = ["VAT", "Flat Tax"] |> Enum.random
     tax_code = Faker.Lorem.characters(8) |> to_string
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                  |> NaiveDateTime.to_string
     
     %TaxCategory{
       name: category,
       description: Faker.Lorem.paragraph(),
       is_default: Enum.random([true, false]),
-      tax_code: tax_code
+      tax_code: tax_code,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
   def tax_rate_factory do
-    amount = FakerElixir.Number.decimal(1,2)
-             |> Decimal.new
-             |> Decimal.to_float
+    amount = odd_decimal(1,5)
     zone = insert(:zone)
     deleted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
                  |> NaiveDateTime.to_string
@@ -510,7 +512,9 @@ defmodule InventoryRoom.Factory do
       included_in_price: Enum.random([true, false]),
       name: "VAT Sales Tax",
       show_rate_in_label: Enum.random([true, false]),
-      deleted_at: deleted_at
+      deleted_at: deleted_at,
+      inserted_at: deleted_at,
+      updated_at: deleted_at
     }
   end
 
