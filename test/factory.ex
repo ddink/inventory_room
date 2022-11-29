@@ -270,20 +270,25 @@ defmodule InventoryRoom.Factory do
 
   def adjustment_reason_factory do
     reason = ["price change", "transaction misfunction", "out of stock"] |> Enum.random()
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                  |> NaiveDateTime.to_string
+
     %AdjustmentReason{
       name: reason,
-      code: reason,
-      active: true
+      code: "#{reason} - #{Enum.random(1..100)}",
+      active: Enum.random([true, false]),
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
   def adjustment_factory do
-    amount = FakerElixir.Number.decimal(2,2)
-             |> Decimal.new
-             |> Decimal.to_float
+    amount = odd_decimal(2,2)
     order = ShoppingCart.Factory.insert(:order)
     promotion_code = insert(:promotion_code)
     adjustment_reason = insert(:adjustment_reason)
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                 |> NaiveDateTime.to_string
     
     %Adjustment{
       amount: amount,
@@ -291,41 +296,55 @@ defmodule InventoryRoom.Factory do
       eligible: Enum.random([true, false]),
       order_id: order.id,
       promotion_code_id: promotion_code.id,
-      adjustment_reason: adjustment_reason.id
+      adjustment_reason_id: adjustment_reason.id,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
   def refund_reason_factory do
     reason = ["bad product", "mispurchase", "out of stock"] |> Enum.random()
     code = Faker.Lorem.characters(4) |> to_string
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                  |> NaiveDateTime.to_string
     
     %RefundReason{
       name: reason,
       active: Enum.random([true, false]),
       mutable: Enum.random([true, false]),
-      code: code
+      code: code,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
   def reimbursement_type_factory do
     reimbursement = ["refund", "complementary product"] |> Enum.random()
     type = ["refund", "gift"] |> Enum.random()
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                  |> NaiveDateTime.to_string
     
     %ReimbursementType{
       name: reimbursement,
       active: Enum.random([true, false]),
       mutable: Enum.random([true, false]),
-      type: type
+      type: type,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
   def return_reason_factory do
     reason = ["bad product", "opened packaging", "not as requested"] |> Enum.random()
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                  |> NaiveDateTime.to_string
 
     %ReturnReason{
       name: reason,
       active: Enum.random([true, false]),
       mutable: Enum.random([true, false]),
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
@@ -715,54 +734,66 @@ defmodule InventoryRoom.Factory do
   def return_authorization_factory do
     order = ShoppingCart.Factory.insert(:order)
     stock_location = insert(:stock_location)
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                  |> NaiveDateTime.to_string
     
     %ReturnAuthorization{
       number: to_string(Enum.random(200..1000)),
       state: "returned",
       memo: Faker.Lorem.paragraph(),
       order_id: order.id,
-      stock_location_id: stock_location.id
+      stock_location_id: stock_location.id,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
   def customer_return_factory do
     stock_location = insert(:stock_location)
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                  |> NaiveDateTime.to_string
     
     %CustomerReturn{
       number: to_string(Enum.random(200..1000)),
-      stock_location_id: stock_location.id
+      stock_location_id: stock_location.id,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
   def reimbursement_factory do
     customer_return = insert(:customer_return)
     order = ShoppingCart.Factory.insert(:order)
-    total = FakerElixir.Number.decimal(2,2)
-             |> Decimal.new
-             |> Decimal.to_float
+    total = odd_decimal(2,2)
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                  |> NaiveDateTime.to_string
 
     %Reimbursement{
       number: to_string(Enum.random(200..1000)),
       reimbursement_status: "reimbursed",
       total: total,
       customer_return_id: customer_return.id,
-      order_id: order.id
+      order_id: order.id,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
   def refund_factory do
-    amount = FakerElixir.Number.decimal(2,2)
-             |> Decimal.new
-             |> Decimal.to_float
+    amount = odd_decimal(2,2)
     payment = insert(:payment)
     refund_reason = insert(:refund_reason)
     reimbursement = insert(:reimbursement)
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                  |> NaiveDateTime.to_string
     
     %Refund{
       amount: amount,
       payment_id: payment.id,
       refund_reason_id: refund_reason.id,
-      reimbursement_id: reimbursement.id
+      reimbursement_id: reimbursement.id,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
