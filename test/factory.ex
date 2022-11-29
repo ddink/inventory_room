@@ -530,6 +530,8 @@ defmodule InventoryRoom.Factory do
                 |> Map.get(:number) 
                 |> String.to_integer
               end
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                  |> NaiveDateTime.to_string
 
     %Country{
       iso_name: country_name,
@@ -537,7 +539,9 @@ defmodule InventoryRoom.Factory do
       iso3: country_iso3,
       name: country_name,
       numcode: numcode,
-      states_required: Enum.random([true, false])
+      states_required: Enum.random([true, false]),
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
@@ -561,24 +565,32 @@ defmodule InventoryRoom.Factory do
                  else
                    state_name
                  end
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                  |> NaiveDateTime.to_string
     
     %State{
       name: state_name,
       abbr: state_abbr,
-      country_id: country_factory.id
+      country_id: country_factory.id,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
   def zone_factory do
     name = ["North America", "EU Zone", "Caribbean"] |> Enum.random
     type = ["country-based", "state-based"] |> Enum.random
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                 |> NaiveDateTime.to_string
     
     %Zone{
       name: name,
       description: Faker.Lorem.paragraph(),
       zone_members_count: Enum.random(3..30),
       type: type,
-      default_tax: Enum.random([true, false])
+      default_tax: Enum.random([true, false]),
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
