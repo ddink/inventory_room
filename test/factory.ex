@@ -215,10 +215,14 @@ defmodule InventoryRoom.Factory do
   def promotion_category_factory do
     name = ["Weekly Sale", "Quarterly Sale", "Regular Discount", "Black Friday Sale"] |> Enum.random()
     code = Faker.Lorem.characters(4) |> to_string
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                 |> NaiveDateTime.to_string
     
     %PromotionCategory{
       name: name,
-      code: code
+      code: code,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
@@ -244,17 +248,23 @@ defmodule InventoryRoom.Factory do
       path: "#{name}/",
       promotion_category_id: promotion_category.id,
       per_code_usage_limit: 1,
-      apply_automatically: true
+      apply_automatically: true,
+      inserted_at: expires_at,
+      updated_at: expires_at
     }
   end
 
   def promotion_code_factory do
     promotion = insert(:promotion)
     code = Faker.Lorem.characters(4) |> to_string
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                 |> NaiveDateTime.to_string
     
     %PromotionCode{
       promotion_id: promotion.id,
-      value: code
+      value: code,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
