@@ -349,17 +349,17 @@ defmodule InventoryRoom.Factory do
   end
 
   def shipment_factory do
-    cost = FakerElixir.Number.decimal(2,2)
-           |> Decimal.new
-           |> Decimal.to_float
-    adjustment_total = cost * 0.02
-    promo_total = cost * 0.15
-    additional_tax_total = (cost - promo_total) * 0.19
-    included_tax_total = (cost - promo_total) + additional_tax_total
+    cost = odd_decimal(2,2)
+    adjustment_total = odd_decimal(2,2)
+    promo_total = odd_decimal(2,2)
+    additional_tax_total = odd_decimal(2,2)
+    included_tax_total = odd_decimal(2,2)
     tracking = Faker.Lorem.characters(10) |> to_string
     shipped_at = NaiveDateTime.utc_now() |> NaiveDateTime.to_string()
     order = ShoppingCart.Factory.insert(:order)
     stock_location = insert(:stock_location)
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                  |> NaiveDateTime.to_string
     
     %Shipment{
       tracking_number: tracking,
@@ -371,15 +371,21 @@ defmodule InventoryRoom.Factory do
       promo_total: promo_total,
       included_tax_total: included_tax_total,
       order_id: order.id,
-      stock_location_id: stock_location.id
+      stock_location_id: stock_location.id,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
   def shipping_category_factory do
     category = ["ground freight shipping", "air freight shipping", "ground postal shipping"] |> Enum.random()
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                  |> NaiveDateTime.to_string
     
     %ShippingCategory{
-      name: category
+      name: "#{category} - #{Enum.random(1..100)}",
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
@@ -389,6 +395,8 @@ defmodule InventoryRoom.Factory do
                  |> NaiveDateTime.to_string
     code = Faker.Lorem.characters(8) |> to_string
     tax_category = insert(:tax_category)
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                  |> NaiveDateTime.to_string
 
     %ShippingMethod{
       name: "Shipping Method #{shipping_method_id}",
@@ -400,7 +408,9 @@ defmodule InventoryRoom.Factory do
       available_to_all: Enum.random([true, false]),
       carrier: "Fedex",
       service_level: "Ground",
-      tax_category_id: tax_category.id
+      tax_category_id: tax_category.id,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
@@ -690,6 +700,8 @@ defmodule InventoryRoom.Factory do
   def stock_location_factory do
     location_id = Enum.random(1..10)
     code = Faker.Lorem.characters(4) |> to_string
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                  |> NaiveDateTime.to_string
     
     %StockLocation{
       name: "Stock Location #{location_id}",
@@ -707,7 +719,9 @@ defmodule InventoryRoom.Factory do
       restock_inventory: Enum.random([true, false]),
       fulfillable: Enum.random([true, false]),
       code: code,
-      check_stock_on_transfer: Enum.random([true, false])
+      check_stock_on_transfer: Enum.random([true, false]),
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
