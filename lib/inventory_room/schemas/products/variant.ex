@@ -27,7 +27,7 @@ defmodule InventoryRoom.Products.Variant do
   alias InventoryRoom.Joins.VariantOptionValue
   alias InventoryRoom.Products.{Product, VariantImage}
   alias InventoryRoom.Settings.Taxes.TaxCategory
-  # alias InventoryRoom.StockItems.StockItem
+  alias InventoryRoom.Inventory.StockItem
 
   schema "variants" do
     field :sku, :string
@@ -44,7 +44,7 @@ defmodule InventoryRoom.Products.Variant do
     field :track_inventory, :boolean
     belongs_to :tax_category, TaxCategory
     has_many :variant_images, VariantImage
-    # has_one :stock_item, StockItem
+    has_one :stock_item, StockItem
     has_many :variant_option_values, VariantOptionValue
     has_many :option_values, through: [:variant_option_values, :option_value]
     timestamps()
@@ -56,6 +56,10 @@ defmodule InventoryRoom.Products.Variant do
 
   def required_fields do
     [:sku]
+  end
+
+  def decimal_fields do
+    [:weight, :height, :width, :depth, :cost_price]
   end
 
 	def changeset(params) when is_map(params), do: changeset(%__MODULE__{}, params)

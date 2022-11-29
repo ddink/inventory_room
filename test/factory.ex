@@ -80,11 +80,15 @@ defmodule InventoryRoom.Factory do
 
   def option_type_factory do
     option = ["size", "color", "style"] |> Enum.random()
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                  |> NaiveDateTime.to_string
     
     %OptionType{
-      name: "product-#{option}",
+      name: "product-#{option}-#{Enum.random(1..100)}",
       presentation: option,
-      position: Enum.random(1..10)
+      position: Enum.random(1..10),
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
@@ -100,12 +104,16 @@ defmodule InventoryRoom.Factory do
     value = presentation_map 
             |> Map.keys() 
             |> Enum.random()
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                  |> NaiveDateTime.to_string
     
     %OptionValue{
       position: Enum.random(1..10),
       name: value,
       presentation: presentation_map[value],
-      option_type_id: option_type.id
+      option_type_id: option_type.id,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
@@ -116,9 +124,10 @@ defmodule InventoryRoom.Factory do
                   |> Map.get(:alpha2)
     deleted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
                  |> NaiveDateTime.to_string
-    amount = FakerElixir.Number.decimal(2,2)
-             |> Decimal.new
-             |> Decimal.to_float
+    amount = odd_decimal(2,2)
+    variant = insert(:variant)
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                 |> NaiveDateTime.to_string
     
     %Price{
       amount: amount,
@@ -126,17 +135,41 @@ defmodule InventoryRoom.Factory do
       deleted_at: deleted_at,
       is_default: false,
       country_iso: country_iso,
-      variant_id: Enum.random(1..10)
+      variant_id: variant.id,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
+  end
+
+  # TODO: properties for the schema fields that need to
+  #       use this helper function
+  defp odd_decimal(left_digit, right_digit) do
+    decimal = FakerElixir.Number.decimal(left_digit, right_digit)
+    
+    last_digit = decimal
+    |> String.split("", trim: true) 
+    |> List.last 
+
+    if last_digit == "0" do
+      odd_decimal(left_digit, right_digit)
+    else
+      decimal
+      |> Decimal.new
+      |> Decimal.to_float
+    end
   end
 
   def property_factory do
     name = ["Manufacturer", "Brand", "Model", "Shirt Type"] |> Enum.random()
     presentation = ["Nike", "Jordan", "Flight Team", "T-shirt"] |> Enum.random()
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                  |> NaiveDateTime.to_string  
 
     %Property{
-      name: name,
-      presentation: presentation
+      name: "#{name} - #{Enum.random(1..100)}",
+      presentation: "#{presentation} - #{Enum.random(1..100)}",
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
@@ -160,16 +193,22 @@ defmodule InventoryRoom.Factory do
       description: Faker.Lorem.paragraph(),
       meta_description: Faker.Lorem.paragraph(),
       meta_keywords: Faker.Lorem.sentence(10, ""),
-      meta_title: String.capitalize(Faker.Lorem.word())
+      meta_title: String.capitalize(Faker.Lorem.word()),
+      inserted_at: icon_updated_at,
+      updated_at: icon_updated_at
     }
   end
 
   def taxonomy_factory do
     name = ["Shirts", "Pants", "Jackets", "Socks"] |> Enum.random()
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                 |> NaiveDateTime.to_string
     
     %Taxonomy{
-      name: name,
-      position: Enum.random(1..10)
+      name: "#{name} - #{Enum.random(1..100)}",
+      position: Enum.random(1..100),
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
@@ -536,6 +575,8 @@ defmodule InventoryRoom.Factory do
                  |> List.first
     shipping_category = insert(:shipping_category)
     tax_category = insert(:tax_category)
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                  |> NaiveDateTime.to_string
 
     %Product{
       name: name,
@@ -548,34 +589,38 @@ defmodule InventoryRoom.Factory do
       promotionable: Enum.random([true, false]),
       master_sku: "#{master_sku_name}",
       shipping_category_id: shipping_category.id,
-      tax_category_id: tax_category.id
+      tax_category_id: tax_category.id,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
   def product_image_factory do
     product = insert(:product)
     image_id = Enum.random(1..10)
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                  |> NaiveDateTime.to_string
 
     %ProductImage{
       product_id: product.id,
       alt_text: Faker.Lorem.sentence(5, ""),
       url: "#{product.slug}/images/#{image_id}",
-      file: "#{product.name}_#{image_id}.jpg"
+      file: "#{product.name}_#{image_id}.jpg",
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
   def variant_factory do
     product = insert(:product)
-    size = FakerElixir.Number.decimal(1,1)
-           |> Decimal.new
-           |> Decimal.to_float
-    price = FakerElixir.Number.decimal(2,2)
-           |> Decimal.new
-           |> Decimal.to_float
+    size = odd_decimal(1,2)
+    price = odd_decimal(2,2)
     deleted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
                  |> NaiveDateTime.to_string
     currency_code = ["USD", "EUR", "GBP"] |> Enum.random()
     tax_category = insert(:tax_category)
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                  |> NaiveDateTime.to_string
 
     %Variant{
       sku: "#{product.master_sku}-00#{Enum.random(1..9)}",
@@ -590,7 +635,9 @@ defmodule InventoryRoom.Factory do
       position: Enum.random(1..10),
       cost_currency: currency_code,
       track_inventory: Enum.random([true, false]),
-      tax_category_id: tax_category.id
+      tax_category_id: tax_category.id,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
@@ -598,12 +645,16 @@ defmodule InventoryRoom.Factory do
     variant = insert(:variant)
     product = insert(:product)
     image_id = Enum.random(1..10)
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                  |> NaiveDateTime.to_string
 
     %VariantImage{
       variant_id: variant.id,
       alt_text: Faker.Lorem.sentence(5, ""),
       url: "#{product.slug}/images/#{image_id}",
-      file: "#{product.name}_#{image_id}.jpg"
+      file: "#{product.name}_#{image_id}.jpg",
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
