@@ -417,36 +417,46 @@ defmodule InventoryRoom.Factory do
   def credit_category_factory do
     category = ["store credit", "company credit", "brand credit"] 
                |> Enum.random
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+               |> NaiveDateTime.to_string
     
     %CreditCategory{
-      name: category
+      name: "#{category} - #{Enum.random(1..100)}",
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
   def credit_reason_factory do
     reason = ["reimbursement", "exclusive discount", "sale"]
              |> Enum.random
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                  |> NaiveDateTime.to_string
 
     %CreditReason{
-      name: reason
+      name: "#{reason} - #{Enum.random(1..100)}",
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
   def credit_type_factory do
     type = ["one-time", "regular"] |> Enum.random
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                  |> NaiveDateTime.to_string
 
     %CreditType{
-      name: type,
-      priority: Enum.random(1..5)
+      name: "#{type} - #{Enum.random(1..100)}",
+      priority: Enum.random(1..50),
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
   def credit_factory do
-    amount = FakerElixir.Number.decimal(2,2)
-             |> Decimal.new
-             |> Decimal.to_float
-    amount_used = amount / 2
-    amount_authorized = amount * 0.8
+    amount = odd_decimal(2,2)
+    amount_used = odd_decimal(2,2)
+    amount_authorized = odd_decimal(2,2)
     credit_category = insert(:credit_category)
     credit_type = insert(:credit_type)
     currency_code = ["USD", "EUR", "GBP"] |> Enum.random()
@@ -455,6 +465,8 @@ defmodule InventoryRoom.Factory do
     invalidated_at = NaiveDateTime.new!(~D[2021-12-31], ~T[00:00:00])
                  |> NaiveDateTime.to_string
     user = ShoppingCart.Factory.insert(:user)
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                  |> NaiveDateTime.to_string
     
     %Credit{
       amount: amount,
@@ -464,10 +476,11 @@ defmodule InventoryRoom.Factory do
       memo: Faker.Lorem.paragraph(),
       deleted_at: deleted_at,
       invalidated_at: invalidated_at,
-      created_by_id: user.id,
       user_id: user.id,
       credit_category_id: credit_category.id,
-      credit_type_id: credit_type.id
+      credit_type_id: credit_type.id,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 

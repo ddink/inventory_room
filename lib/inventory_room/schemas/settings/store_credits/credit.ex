@@ -33,7 +33,7 @@ defmodule InventoryRoom.Settings.StoreCredits.Credit do
     # field :spree_store_credits, :naive_datetime
     field :deleted_at, :naive_datetime
     field :invalidated_at, :naive_datetime
-    field :created_by_id, :integer
+    # field :created_by_id, :integer
     belongs_to :user, User
     belongs_to :credit_category, CreditCategory
     belongs_to :credit_type, CreditType

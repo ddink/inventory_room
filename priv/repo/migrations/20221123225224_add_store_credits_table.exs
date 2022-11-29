@@ -10,7 +10,6 @@ defmodule StoreRepo.Repo.Migrations.AddStoreCreditsTable do
       add :memo, :text
       add :deleted_at, :naive_datetime
       add :invalidated_at, :naive_datetime
-      add :created_by_id, :naive_datetime
       add :user_id, references(:users)
       add :credit_category_id, references(:credit_categories)
       add :credit_type_id, references(:credit_types)
