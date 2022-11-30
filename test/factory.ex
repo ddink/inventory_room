@@ -86,7 +86,7 @@ defmodule InventoryRoom.Factory do
     %OptionType{
       name: "product-#{option}-#{Enum.random(1..100)}",
       presentation: option,
-      position: Enum.random(1..10),
+      position: Enum.random(1..50),
       inserted_at: inserted_at,
       updated_at: inserted_at
     }
@@ -108,7 +108,7 @@ defmodule InventoryRoom.Factory do
                   |> NaiveDateTime.to_string
     
     %OptionValue{
-      position: Enum.random(1..10),
+      position: Enum.random(1..50),
       name: value,
       presentation: presentation_map[value],
       option_type_id: option_type.id,
@@ -325,7 +325,7 @@ defmodule InventoryRoom.Factory do
                   |> NaiveDateTime.to_string
     
     %ReimbursementType{
-      name: reimbursement,
+      name: "#{reimbursement} - #{Enum.random(1..100)}",
       active: Enum.random([true, false]),
       mutable: Enum.random([true, false]),
       type: type,
@@ -340,7 +340,7 @@ defmodule InventoryRoom.Factory do
                   |> NaiveDateTime.to_string
 
     %ReturnReason{
-      name: reason,
+      name: "#{reason} - #{Enum.random(1..100)}",
       active: Enum.random([true, false]),
       mutable: Enum.random([true, false]),
       inserted_at: inserted_at,
@@ -763,9 +763,7 @@ defmodule InventoryRoom.Factory do
   end
 
   def payment_factory do
-    amount = FakerElixir.Number.decimal(2,2)
-             |> Decimal.new
-             |> Decimal.to_float
+    amount = odd_decimal(2,2)
     order = ShoppingCart.Factory.insert(:order)
     payment_method = insert(:payment_method)
     inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
