@@ -853,17 +853,19 @@ defmodule InventoryRoom.Factory do
   end
 
   def stock_item_factory do
-    deleted_at = NaiveDateTime.utc_now()
+    deleted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
                  |> NaiveDateTime.to_string
     stock_location = insert(:stock_location)
     variant = insert(:variant)
     
     %StockItem{
-      count_on_hand: Enum.random(10..30),
+      count_on_hand: Enum.random(10..300),
       backorderable: Enum.random([true, false]),
       deleted_at: deleted_at,
       stock_location_id: stock_location.id,
-      variant_id: variant.id
+      variant_id: variant.id,
+      inserted_at: deleted_at,
+      updated_at: deleted_at
     }
   end
 
