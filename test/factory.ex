@@ -768,6 +768,8 @@ defmodule InventoryRoom.Factory do
              |> Decimal.to_float
     order = ShoppingCart.Factory.insert(:order)
     payment_method = insert(:payment_method)
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                  |> NaiveDateTime.to_string
     
     %Payment{
       amount: amount,
@@ -778,7 +780,9 @@ defmodule InventoryRoom.Factory do
       cvv_response_code: "200",
       cvv_response_message: "payment successfully made",
       order_id: order.id,
-      payment_method_id: payment_method.id
+      payment_method_id: payment_method.id,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
