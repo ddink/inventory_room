@@ -597,6 +597,8 @@ defmodule InventoryRoom.Factory do
   def payment_method_factory do
     type = ["credit card", "bank transfer", "remittance"] |> Enum.random
     name = ["VISA", "MASTERCARD", "EFECTY", "BANK_REFERENCED"] |> Enum.random
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                  |> NaiveDateTime.to_string
     
     %PaymentMethod{
       type: type,
@@ -604,7 +606,9 @@ defmodule InventoryRoom.Factory do
       description: Faker.Lorem.paragraph(),
       active: Enum.random([true, false]),
       available_to_users: Enum.random([true, false]),
-      available_to_admin: Enum.random([true, false])
+      available_to_admin: Enum.random([true, false]),
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
@@ -618,6 +622,8 @@ defmodule InventoryRoom.Factory do
     country_iso = Countries.filter_by(:currency_code, currency_code) 
                   |> Enum.random() 
                   |> Map.get(:alpha2)
+    inserted_at = NaiveDateTime.new!(~D[2022-01-01], ~T[00:00:00])
+                  |> NaiveDateTime.to_string
     
     %Store{
       name: "#{name} store",
@@ -629,7 +635,9 @@ defmodule InventoryRoom.Factory do
       default_currency: "USD",
       currency: currency_code,
       default: Enum.random([true, false]),
-      cart_tax_country_iso: country_iso
+      cart_tax_country_iso: country_iso,
+      inserted_at: inserted_at,
+      updated_at: inserted_at
     }
   end
 
