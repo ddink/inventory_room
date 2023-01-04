@@ -1,18 +1,14 @@
 defmodule InventoryRoom do
-  @moduledoc """
-  Documentation for `InventoryRoom`.
-  """
-
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> InventoryRoom.hello()
-      :world
-
-  """
-  def hello do
-    :world
-  end
+  import InventoryRoom.API.{
+    Inventory,
+    Orders,
+    Products,
+    Promotions,
+    RefundsAndReturns,
+    Shipping,
+    StoreCredits,
+    StoreSettings,
+    Taxes,
+    Zones
+  }
 end

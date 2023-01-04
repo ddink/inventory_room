@@ -187,5 +187,4 @@ defmodule InventoryRoom.Contexts.Joins do
     ZoneMember.delete_changeset(schema)
     |> Repo.delete()
   end
-
 end
