@@ -1,6 +1,4 @@
-# InventoryRoom
-
-**TODO: Add description**
+# Inventory Room
 
 ## Installation
 
